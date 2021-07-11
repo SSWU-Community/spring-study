@@ -3,15 +3,14 @@ package sungshin.sooon.model;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
 
 @Entity
-@Getter
-@Setter
+@Getter @Setter
 @EqualsAndHashCode(of = "id")
 @Builder
 @AllArgsConstructor
@@ -19,25 +18,22 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 public class Account {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(name = "email", unique = true, length = 20, nullable = false)
+    @NotBlank(message = "Email should not be blank")
+    @Email(message = "Please format your email")
     private String email;
 
-    @Column(nullable = false)
+    @Column(name = "password", length = 16, nullable = false)
+    @NotBlank(message = "Password should not be blank")
+    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[~!@#$%^&*()+|=])[A-Za-z\\d~!@#$%^&*()+|=]{10,16}$",
+            message = "10 or more characters - including English, numeric and special characters")
     private String password;
 
+    @NotBlank(message = "Nickname should not be blank")
+    @Column(name = "nickname")
     private String nickname;
 
-    private LocalDateTime registeredDateTime;
-
-    // 인증 여부
-    private boolean isConfirmed;
-
-    /**
-     *
-     * 기타 추가할 컬럼(필드)들 추가해주시면 됩니다~
-     *
-     */
 }

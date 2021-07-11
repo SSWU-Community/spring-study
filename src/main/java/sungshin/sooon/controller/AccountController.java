@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sungshin.sooon.dto.LoginRequest;
+import sungshin.sooon.dto.SignUpRequest;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.CurrentUser;
@@ -20,6 +21,14 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<TokenDto> login(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(accountService.login(loginRequest));
+    }
+
+    // 회원가입
+    @PostMapping("/signup")
+    public String signup(@RequestBody SignUpRequest signUpRequest) {
+        accountService.signup(signUpRequest);
+
+        return "redirect:/login";
     }
 
 }

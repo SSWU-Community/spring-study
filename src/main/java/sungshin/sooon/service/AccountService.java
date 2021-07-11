@@ -9,10 +9,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sungshin.sooon.config.TokenProvider;
 import sungshin.sooon.dto.LoginRequest;
+import sungshin.sooon.dto.SignUpRequest;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.RefreshToken;
@@ -29,18 +31,19 @@ public class AccountService implements UserDetailsService {
     private final RefreshTokenRepository refreshTokenRepository;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final TokenProvider tokenProvider;
+    private final PasswordEncoder passwordEncoder;
 
     // 로그인한 유저 정보 반환 to @CurrentUser
     public Account getUserInfo() {
-        return accountRepository.findAccountByEmail(SecurityUtil.getUserName());
+        return accountRepository.findByEmail(SecurityUtil.getUserName());
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Account account = accountRepository.findAccountByEmail(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Account account = accountRepository.findByEmail(email);
 
         if(account == null) {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
         return new UserAccount(account);
     }
@@ -70,5 +73,14 @@ public class AccountService implements UserDetailsService {
 
         // 5. 토큰 발급
         return tokenDto;
+    }
+
+    @Transactional
+    public void signup(SignUpRequest signUpRequest) {
+        Account account = signUpRequest.toAccount(passwordEncoder);
+        Account searchAccount = accountRepository.findByEmail(account.getEmail());
+        if (searchAccount == null) {
+            accountRepository.save(searchAccount);
+        }
     }
 }
