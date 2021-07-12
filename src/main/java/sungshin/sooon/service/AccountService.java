@@ -75,6 +75,7 @@ public class AccountService implements UserDetailsService {
         return tokenDto;
     }
 
+    // 회원가입
     @Transactional
     public void signup(SignUpRequest signUpRequest) {
         Account account = signUpRequest.toAccount(passwordEncoder);

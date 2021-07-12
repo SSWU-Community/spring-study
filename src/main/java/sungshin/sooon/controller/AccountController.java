@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import sungshin.sooon.dto.LoginRequest;
 import sungshin.sooon.dto.SignUpRequest;
 import sungshin.sooon.dto.TokenDto;
-import sungshin.sooon.model.Account;
-import sungshin.sooon.model.CurrentUser;
 import sungshin.sooon.service.AccountService;
 
 @RestController
