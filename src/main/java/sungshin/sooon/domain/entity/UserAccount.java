@@ -1,4 +1,4 @@
-package sungshin.sooon.model;
+package sungshin.sooon.domain.entity;
 
 import lombok.Getter;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
