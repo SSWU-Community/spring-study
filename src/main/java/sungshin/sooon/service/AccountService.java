@@ -79,9 +79,18 @@ public class AccountService implements UserDetailsService {
     @Transactional
     public void signup(SignUpRequest signUpRequest) {
         Account account = signUpRequest.toAccount(passwordEncoder);
-        Account searchAccount = accountRepository.findByEmail(account.getEmail());
-        if (searchAccount == null) {
-            accountRepository.save(searchAccount);
-        }
+        accountRepository.save(account);
+    }
+
+    // 이메일 중복확인
+    @Transactional
+    public boolean checkEmail(String email) {
+        return accountRepository.existsByEmail(email);
+    }
+
+    // 닉네임 중복확인
+    @Transactional
+    public boolean checkNickname(String nickname) {
+        return accountRepository.existsByNickname(nickname);
     }
 }

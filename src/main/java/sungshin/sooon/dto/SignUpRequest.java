@@ -14,8 +14,6 @@ import javax.validation.constraints.Pattern;
 @NoArgsConstructor
 public class SignUpRequest {
 
-    private Long id;
-
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Please format your email")
     private String email;
@@ -30,7 +28,6 @@ public class SignUpRequest {
 
     public Account toAccount(PasswordEncoder passwordEncoder) {
         return Account.builder()
-                .id(this.id)
                 .email(this.email)
                 .password(passwordEncoder.encode(this.password))
                 .nickname(this.nickname)
