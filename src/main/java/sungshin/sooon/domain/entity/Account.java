@@ -1,4 +1,4 @@
-package sungshin.sooon.model;
+package sungshin.sooon.domain.entity;
 
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -28,12 +27,8 @@ public class Account {
     @Column(nullable = false)
     private String password;
 
+    @Column(nullable = false)
     private String nickname;
-
-    private LocalDateTime registeredDateTime;
-
-    // 인증 여부
-    private boolean isConfirmed;
 
     /**
      *
