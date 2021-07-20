@@ -13,8 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sungshin.sooon.config.TokenProvider;
-import sungshin.sooon.dto.LoginRequest;
-import sungshin.sooon.dto.SignUpRequest;
+import sungshin.sooon.dto.LoginRequestDto;
+import sungshin.sooon.dto.SignUpRequestDto;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.RefreshToken;
@@ -50,9 +50,9 @@ public class AccountService implements UserDetailsService {
 
     // 로그인
     @Transactional
-    public TokenDto login(LoginRequest loginRequest) {
+    public TokenDto login(LoginRequestDto loginRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
-        UsernamePasswordAuthenticationToken authenticationToken = loginRequest.toAuthentication();
+        UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
 
         // 2. 검증 (사용자 비밀번호 체크) 이 이루어지는 부분
         //    authenticate 메서드가 실행이 될 때 loadUserByUsername 메서드가 실행됨
@@ -77,8 +77,8 @@ public class AccountService implements UserDetailsService {
 
     // 회원가입
     @Transactional
-    public void signup(SignUpRequest signUpRequest) {
-        Account account = signUpRequest.toAccount(passwordEncoder);
+    public void signup(SignUpRequestDto signUpRequestDto) {
+        Account account = signUpRequestDto.toAccount(passwordEncoder);
         accountRepository.save(account);
     }
 

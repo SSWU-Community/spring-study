@@ -4,10 +4,11 @@ import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter @Setter
-@EqualsAndHashCode(of = "id")
+@EqualsAndHashCode(of = "account_id")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,7 +16,7 @@ import javax.persistence.*;
 public class Account {
 
     @Id @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
+    private Long account_id;
 
     @Column(unique = true, length = 20, nullable = false)
     private String email;
@@ -24,5 +25,7 @@ public class Account {
     private String password;
 
     private String nickname;
+
+    private LocalDateTime registeredDateTime;
 
 }

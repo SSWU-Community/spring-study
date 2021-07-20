@@ -3,14 +3,15 @@ package sungshin.sooon.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sungshin.sooon.dto.LoginRequest;
-import sungshin.sooon.dto.SignUpRequest;
+import sungshin.sooon.dto.LoginRequestDto;
+import sungshin.sooon.dto.SignUpRequestDto;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.service.AccountService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.lang.reflect.Member;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,14 +22,14 @@ public class AccountController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@RequestBody LoginRequest loginRequest) {
-        return ResponseEntity.ok(accountService.login(loginRequest));
+    public ResponseEntity<TokenDto> login(@RequestBody LoginRequestDto loginRequestDto) {
+        return ResponseEntity.ok(accountService.login(loginRequestDto));
     }
 
     // 회원가입
     @PostMapping("/signup")
-    public ResponseEntity signup(@RequestBody @Valid SignUpRequest signUpRequest) {
-        accountService.signup(signUpRequest);
+    public ResponseEntity signup(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
+        accountService.signup(signUpRequestDto);
         return ResponseEntity.ok("회원가입 성공");
     }
 
@@ -46,7 +47,7 @@ public class AccountController {
     // 닉네임 중복확인
     @GetMapping("/checkNickname")
     public ResponseEntity checkNickname(@RequestParam String nickname) {
-        boolean check = accountService.checkEmail(nickname);
+        boolean check = accountService.checkNickname(nickname);
         if(check) {
             return ResponseEntity.badRequest().body("이미 사용중인 닉네임입니다.");
         } else {
