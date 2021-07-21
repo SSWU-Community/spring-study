@@ -36,8 +36,9 @@ public class AccountService implements UserDetailsService {
     private final TokenProvider tokenProvider;
 
     // 로그인한 유저 정보 반환 to @CurrentUser
+    @Transactional(readOnly = true)
     public Account getUserInfo() {
-        return accountRepository.findByEmail(SecurityUtil.getUserName());
+        return accountRepository.findByEmail(SecurityUtil.getCurrentUserName());
     }
 
     @Override
