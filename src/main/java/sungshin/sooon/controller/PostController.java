@@ -5,10 +5,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+import sungshin.sooon.domain.entity.Account;
+import sungshin.sooon.domain.entity.CurrentUser;
 import sungshin.sooon.dto.PostCreateRequestDto;
-import sungshin.sooon.dto.SignupRequestDto;
-import sungshin.sooon.service.AccountService;
+import sungshin.sooon.dto.PostResponseDto;
 import sungshin.sooon.service.PostService;
 
 import javax.validation.Valid;
@@ -21,41 +21,54 @@ import java.util.List;
 public class PostController {
     private final PostService postService;
 
+    /*
+    //내가 쓴 글 조회
     @GetMapping("/")
-    public ResponseEntity findAll(@RequestParam long page)
+    public ResponseEntity findAllByAccount(@CurrentUser Account account)
     {
-        postService.findAll(page);
-        return new ResponseEntity(HttpStatus.OK);
+        List<PostResponseDto> posts = postService.findAllByAccount(account);
+        return new ResponseEntity(posts,HttpStatus.OK);
+    }*/
+
+    @GetMapping("/")
+    public ResponseEntity findAll()
+    {
+        List<PostResponseDto> posts = postService.findAll();
+        return new ResponseEntity(posts, HttpStatus.OK);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity findById(@PathVariable long id)
     {
-        postService.findById(id);
-        return new ResponseEntity(HttpStatus.OK);
+        PostResponseDto post = postService.findById(id);
+        return new ResponseEntity(post, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity create(@Valid @RequestBody PostCreateRequestDto postCreateRequestDto, @RequestPart(value="images", required=false) List<MultipartFile> images)
+    public ResponseEntity save(@CurrentUser Account account, @Valid @RequestBody PostCreateRequestDto postCreateRequestDto)
     {
-        postService.create(postCreateRequestDto);
-        return new ResponseEntity(HttpStatus.OK);
+        Long id = postService.save(account,postCreateRequestDto);
+        return new ResponseEntity(id,HttpStatus.CREATED);
     }
-/*
+
+    /*
     @PutMapping("/{id}")
     public ResponseEntity update(@Valid @RequestBody PostUpdateReqeustDto postUpdateReqeustDto)
     {
         postService.update(postUpdateReqeustDto);
         return new ResponseEntity(HttpStatus.OK);
     }
+    */
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@PathVariable long id)
+    public ResponseEntity delete(@CurrentUser Account account, @PathVariable long id)
     {
-        postService.delete(id);
-        return new ResponseEntity(HttpStatus.OK);
+        postService.delete(account,id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    /*
     @PostMapping("/{id}/likes")
     public ResponseEntity like(@PathVariable long id)
     {
