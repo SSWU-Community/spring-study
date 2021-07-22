@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Post {
+public class Post extends BaseEntity {
 
     /*
     기본 키 생성을 데이터베이스에 위임
@@ -122,16 +121,6 @@ public class Post {
 
     @Column(nullable = false, columnDefinition = "boolean default true")
     private boolean isAnonymous = true;
-
-    /*
-    @Temporal(TemporalType.TIMESTAMP)
-
-    날짜 타입(java.util.Date, java.util.Calendar)을 매핑할 때 사용한다. 해당 어노테이션을 생략하게 되면 자바의 Date와 유사한 timestamp로 정의된다.
-    하지만 timestamp대신 datetime을 예약어로 사용하는 데이터베이스도 있는데 데이터베이스 방언 덕분에 어플리케이션 코드는 변경하지 않아도 된다.
-    자바8에서 지원하는 LocalDate, LocalDateTime을 사용할때는 생략 가능(하이버네이트 지원)
-     */
-    @Column
-    private LocalDateTime createdAt;
 
     /*
     @Transient
