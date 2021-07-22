@@ -12,12 +12,12 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PostImages {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name = "post_images_id",  nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_images_id", nullable = false)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="post_id")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @Column(nullable = false)

@@ -32,7 +32,6 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
     }
 
 
-
     @ExceptionHandler(AlreadyExistsException.class)
     public final ResponseEntity<ExceptionResponse> handleAlreadyExistsException(Exception ex, WebRequest request) {
         ExceptionResponse exceptionResponse =

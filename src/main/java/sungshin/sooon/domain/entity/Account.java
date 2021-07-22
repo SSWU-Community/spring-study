@@ -1,7 +1,6 @@
 package sungshin.sooon.domain.entity;
 
 import lombok.*;
-import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,8 +24,9 @@ import java.util.List;
 */
 public class Account {
 
-    @Id @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name = "account_id",  nullable = false)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id", nullable = false)
     private Long id;
 
     @Column(nullable = false)

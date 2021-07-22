@@ -13,7 +13,8 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class PostLike {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue
     @Column(name = "post_like_id")
     private Long id;
 

@@ -13,19 +13,19 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class PostComment {
     @Id
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
-    @Column(name = "post_comment_id",  nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_comment_id", nullable = false)
     private Long id;
 
     @Column(nullable = false)
     private String comment;
 
     @ManyToOne
-    @JoinColumn(name="post_id")
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne(fetch = FetchType.LAZY) //주로 익명이므로
-    @JoinColumn(name="account_id")
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @Column

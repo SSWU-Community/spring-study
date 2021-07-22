@@ -24,16 +24,14 @@ public class AccountController {
 
     //이메일 중복확인
     @GetMapping("/check-email")
-    public ResponseEntity checkEmail(@RequestParam @NotBlank @Email String email)
-    {
+    public ResponseEntity checkEmail(@RequestParam @NotBlank @Email String email) {
         accountService.checkEmail(email);
         return new ResponseEntity(HttpStatus.OK);
     }
 
     //닉네임 중복확인
     @GetMapping("/check-nickname")
-    public ResponseEntity checkNickname(@RequestParam String nickname)
-    {
+    public ResponseEntity checkNickname(@RequestParam String nickname) {
         accountService.checkNickname(nickname);
         return new ResponseEntity(HttpStatus.OK);
     }

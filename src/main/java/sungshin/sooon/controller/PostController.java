@@ -31,25 +31,22 @@ public class PostController {
     }*/
 
     @GetMapping("/")
-    public ResponseEntity findAll()
-    {
+    public ResponseEntity findAll() {
         List<PostResponseDto> posts = postService.findAll();
         return new ResponseEntity(posts, HttpStatus.OK);
     }
 
 
     @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable long id)
-    {
+    public ResponseEntity findById(@PathVariable long id) {
         PostResponseDto post = postService.findById(id);
         return new ResponseEntity(post, HttpStatus.OK);
     }
 
     @PostMapping("/")
-    public ResponseEntity save(@CurrentUser Account account, @Valid @RequestBody PostCreateRequestDto postCreateRequestDto)
-    {
-        Long id = postService.save(account,postCreateRequestDto);
-        return new ResponseEntity(id,HttpStatus.CREATED);
+    public ResponseEntity save(@CurrentUser Account account, @Valid @RequestBody PostCreateRequestDto postCreateRequestDto) {
+        Long id = postService.save(account, postCreateRequestDto);
+        return new ResponseEntity(id, HttpStatus.CREATED);
     }
 
     /*
@@ -62,9 +59,8 @@ public class PostController {
     */
 
     @DeleteMapping("/{id}")
-    public ResponseEntity delete(@CurrentUser Account account, @PathVariable long id)
-    {
-        postService.delete(account,id);
+    public ResponseEntity delete(@CurrentUser Account account, @PathVariable long id) {
+        postService.delete(account, id);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 

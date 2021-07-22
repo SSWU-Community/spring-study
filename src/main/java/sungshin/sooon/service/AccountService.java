@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import sungshin.sooon.config.TokenProvider;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.RefreshToken;
 import sungshin.sooon.domain.entity.UserAccount;
@@ -22,7 +23,6 @@ import sungshin.sooon.dto.SignupRequestDto;
 import sungshin.sooon.dto.SignupResponseDto;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.exception.AlreadyExistsException;
-import sungshin.sooon.config.TokenProvider;
 import sungshin.sooon.util.SecurityUtil;
 
 @Service
@@ -45,7 +45,7 @@ public class AccountService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByEmail(username);
 
-        if(account == null) {
+        if (account == null) {
             throw new UsernameNotFoundException(username);
         }
         return new UserAccount(account);
@@ -53,8 +53,8 @@ public class AccountService implements UserDetailsService {
 
     //이메일 중복확인
     @Transactional
-    public boolean checkEmail(String email){
-        if (accountRepository.existsByEmail(email)){
+    public boolean checkEmail(String email) {
+        if (accountRepository.existsByEmail(email)) {
             throw new AlreadyExistsException("이미 존재하는 이메일 입니다.");
         }
         return true;
@@ -62,9 +62,9 @@ public class AccountService implements UserDetailsService {
 
     //이메일 중복확인
     @Transactional
-    public boolean checkNickname(String nickname){
+    public boolean checkNickname(String nickname) {
         //이 처리를 서비스단에서? 컨트롤러 단에서?
-        if (accountRepository.existsByNickname(nickname)){
+        if (accountRepository.existsByNickname(nickname)) {
             throw new AlreadyExistsException("이미 존재하는 이메일 입니다.");
         }
         return true;

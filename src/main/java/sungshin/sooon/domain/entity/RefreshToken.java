@@ -1,4 +1,5 @@
 package sungshin.sooon.domain.entity;
+
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 

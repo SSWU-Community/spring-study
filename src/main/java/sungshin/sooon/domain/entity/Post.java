@@ -1,10 +1,11 @@
 package sungshin.sooon.domain.entity;
 
-import lombok.*;
-import org.hibernate.annotations.ColumnDefault;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +53,7 @@ public class Post {
      */
     @Id
     @Column(name = "post_id", nullable = false)
-    @GeneratedValue(strategy =  GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;          // 기본키
 
     @Column(nullable = false)
@@ -63,13 +64,14 @@ public class Post {
 
 
     /*
-    * 테이블의 외래키 컬럼을 그대로 사용하지 않은이유:
-    *   테이블은 외래키를 사용해서 연관된 테이블을 찾음,
-    *   객체에서 외래키를 그대로 갖고 있으면 객체에는 조인이라는 기능이 없어서 post.getAccount()처럼 객체 그래프를 탐색(객체 연관관계를 사용한 조회)할 수 없고, 객체의 특성도 살릴 수 없다.
-    * JPA는 객체의 참조와 테이블의 외래키를 매핑
-    *   => 객체에서는 참조를 사용하고 테이블에서는 외래키를 사용할 수 있도록 한다.
-    * */
-    @ManyToOne(fetch = FetchType.LAZY) //주로 익명으로 사용되기 때문에 지연로딩. 익명이 아닐경우에만 조회가 필요함. account.getId() 호출시에는 프록시 객체 초기화가 일어나지 않는다.
+     * 테이블의 외래키 컬럼을 그대로 사용하지 않은이유:
+     *   테이블은 외래키를 사용해서 연관된 테이블을 찾음,
+     *   객체에서 외래키를 그대로 갖고 있으면 객체에는 조인이라는 기능이 없어서 post.getAccount()처럼 객체 그래프를 탐색(객체 연관관계를 사용한 조회)할 수 없고, 객체의 특성도 살릴 수 없다.
+     * JPA는 객체의 참조와 테이블의 외래키를 매핑
+     *   => 객체에서는 참조를 사용하고 테이블에서는 외래키를 사용할 수 있도록 한다.
+     * */
+    @ManyToOne(fetch = FetchType.LAZY)
+    //주로 익명으로 사용되기 때문에 지연로딩. 익명이 아닐경우에만 조회가 필요함. account.getId() 호출시에는 프록시 객체 초기화가 일어나지 않는다.
     @JoinColumn(name = "account_id")
     private Account account;
 

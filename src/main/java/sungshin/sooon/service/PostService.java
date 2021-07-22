@@ -3,16 +3,13 @@ package sungshin.sooon.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.Post;
-import sungshin.sooon.domain.repository.AccountRepository;
 import sungshin.sooon.domain.repository.PostRepository;
 import sungshin.sooon.dto.PostCreateRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
-import sungshin.sooon.exception.AlreadyExistsException;
 import sungshin.sooon.exception.NotFoundException;
 
 import java.util.List;
@@ -28,7 +25,7 @@ public class PostService {
        바로 (readOnly=true)인데 이 옵션을 추가해주면 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도가 개선되기 때문에 등록, 수정, 삭제 기능이 없는 서비스 메소드에 사용하는 것이 좋다.
    */
     @Transactional(readOnly = true)
-    public List<PostResponseDto> findAllByAccount(Account account){
+    public List<PostResponseDto> findAllByAccount(Account account) {
         return postRepository
                 .findAllByAccountOrderByCreatedAt(account)
                 .stream()
@@ -43,7 +40,7 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public List<PostResponseDto> findAll(){
+    public List<PostResponseDto> findAll() {
         return postRepository
                 .findAll()
                 .stream()
@@ -52,16 +49,16 @@ public class PostService {
     }
 
     @Transactional(readOnly = true)
-    public PostResponseDto findById(Long id){
+    public PostResponseDto findById(Long id) {
         Post post = postRepository
                 .findById(id)
-                .orElseThrow(()-> new NotFoundException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
         return PostResponseDto.of(post);
     }
 
 
     @Transactional
-    public Long save(Account account, PostCreateRequestDto postCreateRequestDto){
+    public Long save(Account account, PostCreateRequestDto postCreateRequestDto) {
         Post post = postCreateRequestDto.toPost();
         post.setAccount(account);
         return postRepository
@@ -70,13 +67,13 @@ public class PostService {
     }
 
     @Transactional
-    public void delete(Account account, Long id){
+    public void delete(Account account, Long id) {
         //현재사용자와 게시글을 작성한 유저의 아이디를 비교해서 권한이있는지 확인해야함. 인터셉터로 해야하나?? 서비스단 말고 더 좋은 위치는 없나?
         Post post = postRepository
                 .findById(id)
-                .orElseThrow(()-> new NotFoundException("게시글이 존재하지 않습니다."));
+                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
 
-        if ( post.getAccount().getId() != account.getId()) {
+        if (post.getAccount().getId() != account.getId()) {
             throw new AccessDeniedException("삭제 권한이 없습니다.");
         }
         postRepository.delete(post);
