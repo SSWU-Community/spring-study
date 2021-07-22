@@ -50,9 +50,7 @@ public class PostService {
 
     @Transactional(readOnly = true)
     public PostResponseDto findById(Long id) {
-        Post post = postRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
+        Post post = findByIdOrThrowNotFoundException(id);
         return PostResponseDto.of(post);
     }
 
@@ -68,14 +66,20 @@ public class PostService {
 
     @Transactional
     public void delete(Account account, Long id) {
-        //현재사용자와 게시글을 작성한 유저의 아이디를 비교해서 권한이있는지 확인해야함. 인터셉터로 해야하나?? 서비스단 말고 더 좋은 위치는 없나?
-        Post post = postRepository
-                .findById(id)
-                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
+        Post post = findByIdOrThrowNotFoundException(id);
 
+        //현재사용자와 게시글을 작성한 유저의 아이디를 비교해서 권한이있는지 확인해야함. 인터셉터로 해야하나?? 서비스단 말고 더 좋은 위치는 없나?
         if (post.getAccount().getId() != account.getId()) {
             throw new AccessDeniedException("삭제 권한이 없습니다.");
         }
+
         postRepository.delete(post);
+    }
+
+    private Post findByIdOrThrowNotFoundException(Long id){
+        Post post = postRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
+        return post;
     }
 }
