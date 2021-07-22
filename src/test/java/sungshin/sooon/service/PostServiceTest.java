@@ -6,15 +6,22 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.access.AccessDeniedException;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.Post;
 import sungshin.sooon.domain.repository.PostRepository;
 import sungshin.sooon.dto.PostCreateRequestDto;
+import sungshin.sooon.dto.PostResponseDto;
+import sungshin.sooon.exception.NotFoundException;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
@@ -44,7 +51,14 @@ class PostServiceTest {
     @Test
         //@Disabled: run 하지 않겠다는 뜻
     void findAllByAccount() {
+        //given
+        Account account = Account.builder().id(1L).email("chaeppy@sswu.community").password("tempPassword123").nickname("채피").registeredDateTime(LocalDateTime.now()).build();
 
+        //when
+        postService.findAllByAccount(account);
+
+        //then
+        verify(postRepository).findAllByAccountOrderByCreatedAtDesc(account);
     }
 
     @Test
@@ -61,7 +75,21 @@ class PostServiceTest {
     }
 
     @Test
-    void findById() {
+    void findById_ifPostExists() {
+        //given
+        Long id = 2L;
+        Account account = Account.builder().id(1L).email("chaeppy@sswu.community").password("tempPassword123").nickname("채피").registeredDateTime(LocalDateTime.now()).build();
+        Post post = Post.builder().id(id).title("포스트 테스트").content("포스트 테스트 입니다").isAnonymous(false).build();
+        post.setAccount(account);
+        PostResponseDto wantedDto = PostResponseDto.of(post);
+        given(postRepository.findById(id)).willReturn(Optional.of(post));
+
+        //when
+        PostResponseDto resultDto = postService.findById(id);
+
+        //then
+        verify(postRepository).findById(id);
+        assertThat(resultDto).isEqualTo(wantedDto);
     }
 
     @Test
@@ -85,12 +113,54 @@ class PostServiceTest {
     }
 
     @Test
-    void delete_ifAccountIdMatches() {
+    void delete_ifAccountIdMatchesAndPostExists() {
         //given
+        Long id = 2L;
+        Account account = Account.builder().id(1L).email("chaeppy@sswu.community").password("tempPassword123").nickname("채피").registeredDateTime(LocalDateTime.now()).build();
+
+        Post post = Post.builder().id(id).title("포스트 테스트").content("포스트 테스트 입니다").isAnonymous(false).build();
+        post.setAccount(account);
+        given(postRepository.findById(id)).willReturn(Optional.of(post));
+
+        //when
+        postService.delete(account, id);
+
+        //then
+        ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class);
+        verify(postRepository).delete(postArgumentCaptor.capture());
+        Post capturedPost = postArgumentCaptor.getValue(); //캡쳐한 밸류를 반환받음
+        assertThat(capturedPost).isEqualTo(post);
     }
 
     @Test
     void delete_ifAccountIdDoesNotMatches() {
+        //given
+        Long id = 2L;
+        Account account1 = Account.builder().id(1L).email("chaeppy@sswu.community").password("tempPassword123").nickname("채피").registeredDateTime(LocalDateTime.now()).build();
 
+        Post post = Post.builder().id(id).title("포스트 테스트").content("포스트 테스트 입니다").isAnonymous(false).build();
+        Account account2 = Account.builder().id(2L).email("chaeppy2@sswu.community").password("tempPassword123").nickname("채피2").registeredDateTime(LocalDateTime.now()).build();
+        post.setAccount(account2);
+
+        given(postRepository.findById(id)).willReturn(Optional.ofNullable(post));
+
+        //when
+        //then
+        assertThatThrownBy(()->postService.delete(account1, id)).isInstanceOf(AccessDeniedException.class).hasMessageContaining("삭제 권한이 없습니다.");
+        verify(postRepository, never()).delete(any());
     }
+
+    @Test
+    void delete_ifPostDoesNotExists() {
+        //given
+        Long id = 2L;
+        given(postRepository.findById(id)).willReturn(Optional.ofNullable(null));
+        Account account = Account.builder().id(1L).email("chaeppy@sswu.community").password("tempPassword123").nickname("채피").registeredDateTime(LocalDateTime.now()).build();
+
+        //when
+        //then
+        assertThatThrownBy(()->postService.delete(account, id)).isInstanceOf(NotFoundException.class).hasMessageContaining("게시글이 존재하지 않습니다.");
+        verify(postRepository, never()).delete(any());
+    }
+
 }
