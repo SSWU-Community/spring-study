@@ -1,9 +1,6 @@
 package sungshin.sooon.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,6 +11,16 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+/*
+@EqualsAndHashCode
+    equals와 hashcode를 자동으로 생성해주는 어노테이션
+        equals : 두 객체의 내용이 같은지, 동등성(equality)를 비교하는 연산자입니다.
+        hashcode : 두 객체가 같은 객체인지, 동일성(identity)를 비교하는 연산자입니다.
+    @EqualsAndHashCode(exclude = "value1"): value1는 동등비교에 포함시키지 않겠다는 의미
+    @EqualsAndHashCode(of="id"): 연관 관계가 복잡해 질 때, @EqualsAndHashCode 에서 서로 다른 연관 관계를 순환 참조하느라 무한 루프가 발생하고, 결국 stack overflow가 발생할 수 있기 때문에 id 값만 주로 사용합니다.
+출처: https://donggu1105.tistory.com/99 [인생은 속도가 아니라 방향이다]
+ */
 public class Post extends BaseEntity {
 
     /*
