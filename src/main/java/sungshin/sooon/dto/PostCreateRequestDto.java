@@ -1,6 +1,7 @@
 package sungshin.sooon.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import sungshin.sooon.domain.entity.Post;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class PostCreateRequestDto {
     @NotBlank(message = "title is required")
     private String title;
