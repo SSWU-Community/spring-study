@@ -7,7 +7,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.CurrentUser;
-import sungshin.sooon.dto.PostCreateRequestDto;
+import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
 import sungshin.sooon.service.PostService;
 
@@ -44,19 +44,16 @@ public class PostController {
     }
 
     @PostMapping("/")
-    public ResponseEntity save(@CurrentUser Account account, @Valid @RequestBody PostCreateRequestDto postCreateRequestDto) {
-        Long id = postService.save(account, postCreateRequestDto);
-        return new ResponseEntity(id, HttpStatus.CREATED);
+    public ResponseEntity save(@CurrentUser Account account, @Valid @RequestBody PostRequestDto postRequestDto) {
+        return new ResponseEntity(postService.save(account, postRequestDto), HttpStatus.CREATED);
     }
 
-    /*
+
     @PutMapping("/{id}")
-    public ResponseEntity update(@Valid @RequestBody PostUpdateReqeustDto postUpdateReqeustDto)
-    {
-        postService.update(postUpdateReqeustDto);
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity update(@CurrentUser Account account, @PathVariable long id, @Valid @RequestBody PostRequestDto postRequestDto) {
+        return new ResponseEntity(postService.update(account, id, postRequestDto),HttpStatus.OK);
     }
-    */
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity delete(@CurrentUser Account account, @PathVariable long id) {
