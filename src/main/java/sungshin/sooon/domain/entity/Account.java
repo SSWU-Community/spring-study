@@ -9,7 +9,6 @@ import java.util.List;
 
 @Entity
 @Getter
-@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -64,9 +63,10 @@ public class Account {
             post의 경우 회원이 탈퇴해도 남으므로 사용하면 안될 듯하다.
      */
 
-
+    // !! @Builder 는 초기화 표현을 완전히 무시한다. 초기화 하고 싶으면 @Builder.Default 를 사용해. 아니면 final 쓰면돼
+    @Builder.Default
     @OneToMany(mappedBy = "account")
-    private List<Post> posts = new ArrayList<Post>();
+    private List<Post> posts = new ArrayList<>();
     /*
         mappedBy 속성은 양방향 매핑에서 반대쪽 매핑의 필드 이름을 값으로 적용한다.
             객체에는 양방향 연관관계가 없다. 서로 다른 단방향 연관관계 2개를 로직으로 묶어준 것일 뿐이다.
