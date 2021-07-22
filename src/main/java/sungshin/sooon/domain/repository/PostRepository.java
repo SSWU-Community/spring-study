@@ -7,5 +7,5 @@ import sungshin.sooon.domain.entity.Post;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findAllByAccountOrderByCreatedAt(Account account);
+    List<Post> findAllByAccountOrderByCreatedAtDesc(Account account);
 }

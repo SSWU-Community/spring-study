@@ -27,7 +27,7 @@ public class PostService {
     @Transactional(readOnly = true)
     public List<PostResponseDto> findAllByAccount(Account account) {
         return postRepository
-                .findAllByAccountOrderByCreatedAt(account)
+                .findAllByAccountOrderByCreatedAtDesc(account)
                 .stream()
                 .map(PostResponseDto::of)
                 .collect(Collectors.toList());
