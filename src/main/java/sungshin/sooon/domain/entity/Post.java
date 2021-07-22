@@ -76,7 +76,7 @@ public class Post extends BaseEntity {
      * JPA는 객체의 참조와 테이블의 외래키를 매핑
      *   => 객체에서는 참조를 사용하고 테이블에서는 외래키를 사용할 수 있도록 한다.
      * */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne//(fetch = FetchType.LAZY)
     //주로 익명으로 사용되기 때문에 지연로딩. 익명이 아닐경우에만 조회가 필요함. account.getId() 호출시에는 프록시 객체 초기화가 일어나지 않는다.
     @JoinColumn(name = "account_id")
     private Account account;
@@ -134,4 +134,10 @@ public class Post extends BaseEntity {
     데이터베이스와 상관없이 개발자가 필요에 의해 메모리에서만 사용하고 싶은 필드를 지정하고 싶을때 사용한다.
     데이터베이스에 저장, 조회 되지 않는다.
      */
+
+    public void update(String title, String content, boolean isAnonymous) {
+        this.title = title;
+        this.content = content;
+        this.isAnonymous = isAnonymous;
+    }
 }
