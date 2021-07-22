@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.Post;
 import sungshin.sooon.domain.repository.PostRepository;
-import sungshin.sooon.dto.PostCreateRequestDto;
+import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
 import sungshin.sooon.exception.NotFoundException;
 
@@ -56,12 +56,10 @@ public class PostService {
 
 
     @Transactional
-    public Long save(Account account, PostCreateRequestDto postCreateRequestDto) {
-        Post post = postCreateRequestDto.toPost();
+    public PostResponseDto save(Account account, PostRequestDto postRequestDto) {
+        Post post = postRequestDto.toPost();
         post.setAccount(account);
-        return postRepository
-                .save(post)
-                .getId();
+        return PostResponseDto.of(postRepository.save(post));
     }
 
     @Transactional
@@ -81,5 +79,18 @@ public class PostService {
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
         return post;
+    }
+
+    @Transactional
+    public PostResponseDto update(Account account, Long id, PostRequestDto postRequestDto) {
+        Post post = findByIdOrThrowNotFoundException(id);
+
+        //현재사용자와 게시글을 작성한 유저의 아이디를 비교해서 권한이있는지 확인해야함. 인터셉터로 해야하나?? 서비스단 말고 더 좋은 위치는 없나?
+        if (post.getAccount().getId() != account.getId()) {
+            throw new AccessDeniedException("수정 권한이 없습니다.");
+        }
+
+        postRequestDto.apply(post);
+        return PostResponseDto.of(post);
     }
 }
