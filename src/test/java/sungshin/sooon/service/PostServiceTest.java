@@ -10,7 +10,7 @@ import org.springframework.security.access.AccessDeniedException;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.Post;
 import sungshin.sooon.domain.repository.PostRepository;
-import sungshin.sooon.dto.PostCreateRequestDto;
+import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
 import sungshin.sooon.exception.NotFoundException;
 
@@ -96,14 +96,14 @@ class PostServiceTest {
     void save() {
         //given
         Account account = Account.builder().id(1L).email("chaeppy@sswu.community").password("tempPassword123").nickname("채피").registeredDateTime(LocalDateTime.now()).build();
-        PostCreateRequestDto postCreateRequestDto = PostCreateRequestDto.builder().title("포스트 테스트").content("포스트 테스트 입니다").isAnonymous(false).build();
-        Post post = postCreateRequestDto.toPost();
+        PostRequestDto postRequestDto = PostRequestDto.builder().title("포스트 테스트").content("포스트 테스트 입니다").isAnonymous(false).build();
+        Post post = postRequestDto.toPost();
         post.setAccount(account);
 
         given(postRepository.save(post)).willReturn(post); //실제 레포지토리를 쓰는 것이 아니기때문에 얘가 return하는 것을 지정해줘야함.
 
         //when
-        postService.save(account, postCreateRequestDto);
+        postService.save(account, postRequestDto);
 
         //then
         ArgumentCaptor<Post> postArgumentCaptor = ArgumentCaptor.forClass(Post.class); //내가 save하길 원한 객체랑 실제 service에서 save할 때의 아규먼트인 객체랑 비교해서 원하는 값 그대로 save하는지 테스트.
