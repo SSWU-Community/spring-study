@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class PostCreateRequestDto {
+public class PostRequestDto {
     @NotBlank(message = "title is required")
     private String title;
 
@@ -29,5 +29,10 @@ public class PostCreateRequestDto {
                 .content(content)
                 .isAnonymous(isAnonymous)
                 .build();
+    }
+
+    public void apply(Post post) {
+        post.update(title, content, isAnonymous);
+        // https://github.com/hojinDev/restdocs-sample/blob/d820195792af03057670552341b9f8e5f9d1b0b3/src/main/java/com/example/demo/service/dto/UnitUpdateDto.java#L21
     }
 }
