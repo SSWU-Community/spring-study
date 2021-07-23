@@ -1,11 +1,9 @@
 package sungshin.sooon.dto;
 
 import lombok.*;
-import org.apache.tomcat.jni.Local;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import sungshin.sooon.model.Account;
 
-import javax.persistence.Column;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
