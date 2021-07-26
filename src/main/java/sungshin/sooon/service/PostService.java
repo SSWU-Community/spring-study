@@ -67,17 +67,13 @@ public class PostService {
     // READ
     @Transactional
     public PostResponseDto read(Long post_id) {
-        return PostResponseDto.from(postRepository.findById(post_id)
-                .orElseThrow(() -> new PostNotFound("해당 게시물이 존재하지 않습니다.")));
+        return PostResponseDto.from(getPostInService(post_id));
     }
 
     // UPDATE
     @Transactional
     public PostResponseDto update(Account account, Long post_id, PostRequestDto postRequestDto) throws AccessDeniedException {
-        Post post = postRepository.findById(post_id)
-                .orElseThrow(() -> new PostNotFound("해당 게시물이 존재하지 않습니다."));
-
-        // + 운영자 권한일경우 삭제가능 구현해야됨
+        Post post = getPostInService(post_id);
         if (post.getAccount().getId().equals(account.getId())) {
             throw new AccessDeniedException("게시글의 수정 권한이 없습니다.");
         }
@@ -88,9 +84,7 @@ public class PostService {
     // DELETE
     @Transactional
     public void delete(Account account, Long post_id) throws AccessDeniedException {
-        Post post = postRepository.findById(post_id)
-                .orElseThrow(() -> new PostNotFound("해당 게시물이 존재하지 않습니다."));
-
+        Post post = getPostInService(post_id);
         if (post.getAccount().getId().equals(account.getId())) {
             throw new AccessDeniedException("게시글의 삭제 권한이 없습니다.");
         }

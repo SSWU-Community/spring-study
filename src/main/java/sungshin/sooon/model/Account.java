@@ -36,7 +36,7 @@ public class Account {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
     private List<PostComment> commentList = new ArrayList<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account_id", cascade = CascadeType.REMOVE)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
     private List<PostLike> postLikeList = new ArrayList<>();
 
 

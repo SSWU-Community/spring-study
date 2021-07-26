@@ -22,20 +22,20 @@ public class PostLike {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "FK_PostLike_Account"))
-    private Account account_id;
+    private Account account;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "FK_PostLike_Board"))
-    private Post post_id;
+    private Post post;
 
 
     public void mappingAccount(Account account) {
-        this.account_id = account;
+        this.account = account;
         account.mappingPostLike(this);
     }
 
     public void mappingBoard(Post post) {
-        this.post_id = post;
+        this.post = post;
         post.mappingPostLike(this);
     }
 
