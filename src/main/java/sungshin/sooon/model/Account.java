@@ -9,16 +9,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter @Setter
-@EqualsAndHashCode(of = "account_id")
+@Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
 public class Account {
 
-    @Id @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long account_id;
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name = "account_id", nullable = false)
+    private Long id;
 
     @Column(unique = true, length = 20, nullable = false)
     private String email;

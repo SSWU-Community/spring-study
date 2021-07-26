@@ -14,13 +14,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sungshin.sooon.config.TokenProvider;
 import sungshin.sooon.dto.LoginRequestDto;
-import sungshin.sooon.dto.SignUpRequestDto;
+import sungshin.sooon.dto.SignupRequestDto;
+import sungshin.sooon.dto.SignupResponseDto;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.RefreshToken;
 import sungshin.sooon.model.UserAccount;
 import sungshin.sooon.repository.AccountRepository;
 import sungshin.sooon.repository.RefreshTokenRepository;
+import sungshin.sooon.exception.AlreadyExistsException;
 import sungshin.sooon.util.SecurityUtil;
 
 @Service
@@ -77,20 +79,30 @@ public class AccountService implements UserDetailsService {
 
     // 회원가입
     @Transactional
-    public void signup(SignUpRequestDto signUpRequestDto) {
-        Account account = signUpRequestDto.toAccount(passwordEncoder);
-        accountRepository.save(account);
+    public SignupResponseDto signup(SignupRequestDto signupRequestDto) {
+        if (accountRepository.existsByEmail(signupRequestDto.getEmail())) {
+            throw new AlreadyExistsException("이미 가입되어있는 유저입니다.");
+        }
+
+        Account account = signupRequestDto.toAccount(passwordEncoder);
+        return SignupResponseDto.from(accountRepository.save(account));
     }
 
     // 이메일 중복확인
     @Transactional
     public boolean checkEmail(String email) {
-        return accountRepository.existsByEmail(email);
+        if (accountRepository.existsByEmail(email)) {
+            throw new AlreadyExistsException("이미 사용중인 이메일입니다.");
+        }
+        return true;
     }
 
     // 닉네임 중복확인
     @Transactional
     public boolean checkNickname(String nickname) {
-        return accountRepository.existsByNickname(nickname);
+        if (accountRepository.existsByNickname(nickname)) {
+            throw new AlreadyExistsException("이미 존재하는 닉네임입니다.");
+        }
+        return true;
     }
 }

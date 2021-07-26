@@ -1,17 +1,17 @@
 package sungshin.sooon.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import sungshin.sooon.dto.LoginRequestDto;
-import sungshin.sooon.dto.SignUpRequestDto;
+import sungshin.sooon.dto.SignupRequestDto;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.service.AccountService;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.lang.reflect.Member;
 
 @RestController
 @RequiredArgsConstructor
@@ -28,31 +28,23 @@ public class AccountController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ResponseEntity signup(@RequestBody @Valid SignUpRequestDto signUpRequestDto) {
-        accountService.signup(signUpRequestDto);
+    public ResponseEntity signup(@RequestBody @Valid SignupRequestDto signupRequestDto) {
+        accountService.signup(signupRequestDto);
         return ResponseEntity.ok("회원가입 성공");
     }
 
     // 이메일 중복확인
-    @GetMapping("/checkEmail")
+    @GetMapping("/check-email")
     public ResponseEntity checkEmail(@RequestParam @Email @NotBlank String email) {
-        boolean check = accountService.checkEmail(email);
-        if(check) {
-            return ResponseEntity.badRequest().body("이미 사용중인 이메일입니다.");
-        } else {
-            return ResponseEntity.ok("사용 가능한 이메일입니다.");
-        }
+        accountService.checkEmail(email);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     // 닉네임 중복확인
-    @GetMapping("/checkNickname")
+    @GetMapping("/check-nickname")
     public ResponseEntity checkNickname(@RequestParam String nickname) {
         boolean check = accountService.checkNickname(nickname);
-        if(check) {
-            return ResponseEntity.badRequest().body("이미 사용중인 닉네임입니다.");
-        } else {
-            return ResponseEntity.ok("사용 가능한 닉네임입니다.");
-        }
+        return new ResponseEntity(HttpStatus.OK);
     }
 
 }

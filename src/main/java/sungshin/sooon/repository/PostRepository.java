@@ -5,6 +5,6 @@ import org.springframework.stereotype.Repository;
 import sungshin.sooon.model.Post;
 
 @Repository
-public interface BoardRepository extends JpaRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 
 }

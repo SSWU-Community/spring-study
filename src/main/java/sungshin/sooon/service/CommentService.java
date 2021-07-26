@@ -4,13 +4,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import sungshin.sooon.dto.CommentRequestDto;
+import sungshin.sooon.dto.PostCommentRequestDto;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.Post;
 import sungshin.sooon.model.PostComment;
 import sungshin.sooon.repository.AccountRepository;
-import sungshin.sooon.repository.BoardRepository;
-import sungshin.sooon.repository.CommentRepository;
+import sungshin.sooon.repository.PostRepository;
+import sungshin.sooon.repository.PostCommentRepository;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
@@ -20,13 +20,13 @@ import java.time.LocalDateTime;
 @Slf4j
 public class CommentService {
 
-    private final CommentRepository commentRepository;
-    private final BoardRepository boardRepository;
+    private final PostCommentRepository postCommentRepository;
+    private final PostRepository postRepository;
     private final AccountRepository accountRepository;
 
     @Transactional
-    public long createComment(Long post_id, CommentRequestDto commentDto, String email) {
-        Post post = boardRepository.findById(post_id)
+    public long createComment(Long post_id, PostCommentRequestDto commentDto, String email) {
+        Post post = postRepository.findById(post_id)
                 .orElseThrow(() -> new IllegalArgumentException("해당 게시물이 존재하지 않습니다."));
         Account account = accountRepository.findByEmail(email);
         if(account == null) {
@@ -41,6 +41,6 @@ public class CommentService {
         comment.mappingBoardAndAccount(post, account);
 
         PostComment saveComment = commentDto.toComment();
-        return commentRepository.save(saveComment).getPost_comment_id();
+        return postCommentRepository.save(saveComment).getId();
     }
 }

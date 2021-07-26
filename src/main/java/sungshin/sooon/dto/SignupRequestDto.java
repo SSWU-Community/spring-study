@@ -7,13 +7,12 @@ import sungshin.sooon.model.Account;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.time.LocalDateTime;
 
 @Getter @Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class SignUpRequestDto {
+public class SignupRequestDto {
 
     @NotBlank(message = "Email should not be blank")
     @Email(message = "Please format your email")
@@ -27,14 +26,11 @@ public class SignUpRequestDto {
     @NotBlank(message = "Nickname should not be blank")
     private String nickname;
 
-    private LocalDateTime registeredDateTime;
-
     public Account toAccount(PasswordEncoder passwordEncoder) {
         return Account.builder()
-                .email(this.email)
-                .password(passwordEncoder.encode(this.password))
-                .nickname(this.nickname)
-                .registeredDateTime(LocalDateTime.now())
+                .email(email)
+                .password(passwordEncoder.encode(password))
+                .nickname(nickname)
                 .build();
     }
 }

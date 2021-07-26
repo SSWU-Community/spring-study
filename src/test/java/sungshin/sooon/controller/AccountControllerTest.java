@@ -9,7 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
-import sungshin.sooon.dto.SignUpRequestDto;
+import sungshin.sooon.dto.SignupRequestDto;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -28,7 +28,7 @@ public class AccountControllerTest {
     @DisplayName("회원가입 Test")
     @WithMockUser
     void test_register() throws Exception {
-        SignUpRequestDto dto = SignUpRequestDto.builder()
+        SignupRequestDto dto = SignupRequestDto.builder()
                 .email("20173073@sungshin.ac.kr")
                 .password("test123!!!")
                 .nickname("test")

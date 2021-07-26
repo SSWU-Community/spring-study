@@ -13,14 +13,14 @@ import static javax.persistence.FetchType.LAZY;
 @Entity
 @Getter @Setter
 @Builder
-@EqualsAndHashCode(of = "post_id")
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
 public class Post {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long post_id;
+    @Column(name = "post_id", nullable = false)
+    private Long id;
 
     @Column(length = 100, nullable = false)
     private String title;
@@ -39,8 +39,11 @@ public class Post {
     private LocalDateTime created_at;
 
     @Builder.Default
+    @Transient
     private Long likeCount = 0L;
 
+    @Transient
+    private Long commentCount = 0L;
 
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<PostComment> commentList = new ArrayList<>();
@@ -48,6 +51,11 @@ public class Post {
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
     private List<PostLike> postLikeList = new ArrayList<>();
 
+    public void update(String title, String content, Boolean is_anonymous) {
+        this.title = title;
+        this.content = content;
+        this.is_anonymous = is_anonymous;
+    }
 
     public void mappingAccount(Account account) {
         this.account = account;
@@ -60,12 +68,6 @@ public class Post {
 
     public void mappingPostLike(PostLike postLike) {
         this.postLikeList.add(postLike);
-    }
-
-    public void update(String title, String content, Boolean is_anonymous, LocalDateTime created_at) {
-        this.title = title;
-        this.content = content;
-        this.is_anonymous = is_anonymous;
     }
 
     public void updateLikeCount() {

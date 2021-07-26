@@ -3,10 +3,10 @@ package sungshin.sooon.dto;
 import lombok.Builder;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import sungshin.sooon.model.Account;
 import sungshin.sooon.model.Post;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Data
@@ -20,27 +20,21 @@ public class PostRequestDto {
     @NotBlank(message = "Content should not be blank")
     private String content;
 
-    private Account account;
-
+    @NotNull
     private Boolean is_anonymous;
 
     private LocalDateTime created_at;
 
-//    private List<Comment> commentList;
-
-    private Long likeCount;
-
-    private Long commentCount;
-
-    public Post toBoard() {
-        Post build = Post.builder()
-                .title(this.title)
-                .content(this.content)
-                .account(this.account)
-                .is_anonymous(this.is_anonymous)
+    public Post toPost() {
+        return Post.builder()
+                .title(title)
+                .content(content)
+                .is_anonymous(is_anonymous)
                 .created_at(LocalDateTime.now())
-                .likeCount(this.getLikeCount())
                 .build();
-        return build;
+    }
+
+    public void apply(Post post) {
+        post.update(title, content, is_anonymous);
     }
 }
