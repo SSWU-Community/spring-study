@@ -19,7 +19,7 @@ public class SignupRequestDto {
     private String email;
 
     @NotBlank(message = "password is required")
-    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z]A-Z)(?=.*[@#$%^&+=])(?=\\S+$).{10,}$")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[@#$%^&+=])(?=\\S+$).{10,}$")
     private String password;
 
     @NotBlank(message = "nickname is required")
