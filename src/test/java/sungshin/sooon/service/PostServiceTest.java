@@ -9,6 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.access.AccessDeniedException;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.Post;
+import sungshin.sooon.domain.repository.PostLikeRepository;
 import sungshin.sooon.domain.repository.PostRepository;
 import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
@@ -33,12 +34,14 @@ class PostServiceTest {
     @Mock private PostRepository postRepository;
     //private AutoCloseable autoCloseable; @ExtendWith(MockitoExtension.class)로 대체
 
+    @Mock private PostLikeRepository postLikeRepository;
+
     @BeforeEach
     void setUp() {
         /* @ExtendWith(MockitoExtension.class)로 대체
         autoCloseable = MockitoAnnotations.openMocks(this); //이 클래스의 모든 Mock 초기화
         */
-        postService = new PostService(postRepository);
+        postService = new PostService(postRepository,postLikeRepository);
     }
 
     /* @ExtendWith(MockitoExtension.class)로 대체

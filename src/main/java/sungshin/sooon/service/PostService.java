@@ -78,7 +78,7 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    private Post findByIdOrThrowNotFoundException(Long id){
+    public Post findByIdOrThrowNotFoundException(Long id){
         Post post = postRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
