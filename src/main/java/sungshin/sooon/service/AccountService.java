@@ -18,9 +18,9 @@ import sungshin.sooon.domain.entity.RefreshToken;
 import sungshin.sooon.domain.entity.UserAccount;
 import sungshin.sooon.domain.repository.AccountRepository;
 import sungshin.sooon.domain.repository.RefreshTokenRepository;
+import sungshin.sooon.dto.AccountResponseDto;
 import sungshin.sooon.dto.LoginRequestDto;
 import sungshin.sooon.dto.SignupRequestDto;
-import sungshin.sooon.dto.SignupResponseDto;
 import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.exception.AlreadyExistsException;
 import sungshin.sooon.util.SecurityUtil;
@@ -72,18 +72,19 @@ public class AccountService implements UserDetailsService {
 
     //회원가입
     @Transactional
-    public SignupResponseDto signup(SignupRequestDto signupRequestDto) {
+    public AccountResponseDto signup(SignupRequestDto signupRequestDto) {
         if (accountRepository.existsByEmail(signupRequestDto.getEmail())) {
             throw new AlreadyExistsException("이미 가입되어 있는 유저입니다");
         }
 
-        Account member = signupRequestDto.toAccount(passwordEncoder);
-        return SignupResponseDto.of(accountRepository.save(member));
+        Account account = signupRequestDto.toAccount(passwordEncoder);
+        accountRepository.save(account);
+        return login(signupRequestDto.toLoginRequestDto());
     }
 
     // 로그인
     @Transactional
-    public TokenDto login(LoginRequestDto loginRequestDto) {
+    public AccountResponseDto login(LoginRequestDto loginRequestDto) {
         // 1. Login ID/PW 를 기반으로 AuthenticationToken 생성
         UsernamePasswordAuthenticationToken authenticationToken = loginRequestDto.toAuthentication();
 
@@ -103,7 +104,9 @@ public class AccountService implements UserDetailsService {
         refreshTokenRepository.save(refreshToken);
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
-        // 5. 토큰 발급
-        return tokenDto;
+        // 5. 토큰 포함 현재 유저 정보 반환
+        AccountResponseDto accountResponseDto = AccountResponseDto.of(getUserInfo());
+        accountResponseDto.setToken(tokenDto);
+        return accountResponseDto;
     }
 }

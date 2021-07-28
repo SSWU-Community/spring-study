@@ -5,10 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import sungshin.sooon.dto.AccountResponseDto;
 import sungshin.sooon.dto.LoginRequestDto;
 import sungshin.sooon.dto.SignupRequestDto;
-import sungshin.sooon.dto.SignupResponseDto;
-import sungshin.sooon.dto.TokenDto;
 import sungshin.sooon.service.AccountService;
 
 import javax.validation.Valid;
@@ -39,13 +38,13 @@ public class AccountController {
 
     //회원가입
     @PostMapping("/signup")
-    public ResponseEntity<SignupResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
+    public ResponseEntity<AccountResponseDto> signup(@Valid @RequestBody SignupRequestDto signupRequestDto) {
         return new ResponseEntity(accountService.signup(signupRequestDto), HttpStatus.CREATED);
     }
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<TokenDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
+    public ResponseEntity<AccountResponseDto> login(@Valid @RequestBody LoginRequestDto loginRequestDto) {
         return ResponseEntity.ok(accountService.login(loginRequestDto));
     }
 

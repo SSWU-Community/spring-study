@@ -1,22 +1,18 @@
 package sungshin.sooon.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import sungshin.sooon.domain.entity.Account;
 
-@Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Data
 @Builder
-public class SignupResponseDto {
+public class AccountResponseDto{
     private Long id;
     private String email;
     private String nickname;
+    private TokenDto token;
 
-    public static SignupResponseDto of(Account account) {
-        return SignupResponseDto
+    public static AccountResponseDto of(Account account) {
+        return AccountResponseDto
                 .builder()
                 .id(account.getId())
                 .email(account.getEmail())

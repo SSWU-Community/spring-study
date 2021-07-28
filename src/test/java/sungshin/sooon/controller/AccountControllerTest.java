@@ -20,8 +20,8 @@ import sungshin.sooon.config.HttpLogoutSuccessHandler;
 import sungshin.sooon.config.JwtAccessDeniedHandler;
 import sungshin.sooon.config.JwtAuthenticationEntryPoint;
 import sungshin.sooon.config.TokenProvider;
+import sungshin.sooon.dto.AccountResponseDto;
 import sungshin.sooon.dto.SignupRequestDto;
-import sungshin.sooon.dto.SignupResponseDto;
 import sungshin.sooon.service.AccountService;
 
 import static org.mockito.ArgumentMatchers.any;
@@ -124,7 +124,7 @@ class AccountControllerTest {
     void signup() throws Exception {
         //given
         given(accountService.signup(any(SignupRequestDto.class)))
-                .willReturn(SignupResponseDto
+                .willReturn(AccountResponseDto
                         .builder()
                         .id(1L)
                         .email("20181017@sungshin.ac.kr")

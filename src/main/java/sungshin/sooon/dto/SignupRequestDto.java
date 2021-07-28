@@ -33,4 +33,11 @@ public class SignupRequestDto {
                 .nickname(nickname)
                 .build();
     }
+
+    public LoginRequestDto toLoginRequestDto() {
+        return LoginRequestDto.builder()
+                .email(email)
+                .password(password)
+                .build();
+    }
 }
