@@ -11,7 +11,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode//(callSuper=false) @EqualsAndHashCode(callSuper = true)로 설정시 부모 클래스 필드 값들도 동일한지 체크하며, false(기본값)일 경우 자신 클래스의 필드 값만 고려한다.
 /*
 @EqualsAndHashCode
     equals와 hashcode를 자동으로 생성해주는 어노테이션
@@ -115,6 +115,7 @@ public class Post extends BaseEntity {
         postImages는 post와 함께 자주 쓰이긴하지만 실제로 게시글을 눌러서 조회했을때만 필요하다. 기본값인 지연로딩을 사용하는게 좋을 듯?
     */
     @OneToMany(mappedBy = "post")
+    @Builder.Default
     private List<PostImages> postImages = new ArrayList<>();
 
     // 편의 메소드는 한 곳에만 작성하거나 양쪽 다 작성할 수 있다. 양쪽 엔티티 둘다 작성한다면 무한루프에 빠지지 않도록 체크
@@ -127,6 +128,7 @@ public class Post extends BaseEntity {
     }
 
     @Column(nullable = false, columnDefinition = "boolean default true")
+    @Builder.Default
     private boolean isAnonymous = true;
 
     /*

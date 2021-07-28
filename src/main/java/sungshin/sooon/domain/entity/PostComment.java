@@ -32,6 +32,7 @@ public class PostComment {
     private long orderNum; //익명1, 익명2 구분에 사용
 
     @Column(nullable = false, columnDefinition = "boolean default true")
+    @Builder.Default
     private boolean isAnonymous = true;
 
     @Column
