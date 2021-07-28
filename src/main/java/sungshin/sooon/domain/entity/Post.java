@@ -1,6 +1,7 @@
 package sungshin.sooon.domain.entity;
 
 import lombok.*;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -142,4 +143,15 @@ public class Post extends BaseEntity {
         this.content = content;
         this.isAnonymous = isAnonymous;
     }
+
+    @Formula("(select count(1) from post_like as pl where pl.post_id = post_id)")
+    private long likesCount;
+    /*
+     *
+     * 단순히 카운트만을 조회하기 위해서 연관 엔터티를 사용한다면 (list.size())
+     * 데이터(Employee, Project)가 많아지면 많아질수록 SQL 실행 속도가 느려질 뿐만 아니라 데이터를 담는 컬렉션도 많은 메모리를 사용하기 때문에 점점 성능이 떨어진다.
+     * 더 큰 문제는 카운트를 조회하는 일련의 과정이 Department 수만큼 반복한다는 것이다.
+     *  부서 목록 화면에서 실제로 사용하는 것은 카운트뿐이다. 다른 연관 엔터티 속성을 사용하지 않는다. 그렇다면 카운트만 추출해서 성능을 개선할 수 있지 않을까?
+     * 출처: https://www.popit.kr/jpa-%EC%97%94%ED%84%B0%ED%8B%B0-%EC%B9%B4%EC%9A%B4%ED%8A%B8-%EC%84%B1%EB%8A%A5-%EA%B0%9C%EC%84%A0%ED%95%98%EA%B8%B0/
+     */
 }
