@@ -7,9 +7,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sungshin.sooon.domain.entity.Account;
 import sungshin.sooon.domain.entity.Post;
+import sungshin.sooon.domain.entity.PostLike;
+import sungshin.sooon.domain.repository.PostLikeRepository;
 import sungshin.sooon.domain.repository.PostRepository;
 import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
+import sungshin.sooon.exception.AlreadyExistsException;
 import sungshin.sooon.exception.NotFoundException;
 
 import java.util.List;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PostService {
     private final PostRepository postRepository;
+    private final PostLikeRepository postLikeRepository;
 
     /*
        바로 (readOnly=true)인데 이 옵션을 추가해주면 트랜잭션 범위는 유지하되, 조회 기능만 남겨두어 조회 속도가 개선되기 때문에 등록, 수정, 삭제 기능이 없는 서비스 메소드에 사용하는 것이 좋다.
@@ -92,5 +96,29 @@ public class PostService {
 
         postRequestDto.apply(post);
         return PostResponseDto.of(post);
+    }
+
+    @Transactional
+    public void like(Account account, long postId){
+        Post post = findByIdOrThrowNotFoundException(postId);
+
+        if (postLikeRepository.findByAccountAndPost(account, post) != null) {
+            throw new AlreadyExistsException("이미 좋아요한 게시글입니다.");
+        }
+
+        PostLike postLike = PostLike.builder().post(post).account(account).build();
+        postLikeRepository.save(postLike);
+    }
+
+    @Transactional
+    public void unlike(Account account, long postId){
+        Post post = findByIdOrThrowNotFoundException(postId);
+        PostLike postLike = postLikeRepository.findByAccountAndPost(account, post);
+
+        if (postLike == null) {
+            throw new NotFoundException("좋아요한 기록이 없습니다.");
+        }
+
+        postLikeRepository.delete(postLike);
     }
 }
