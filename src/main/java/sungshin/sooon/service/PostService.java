@@ -99,7 +99,7 @@ public class PostService {
     }
 
     @Transactional
-    public void like(Account account, long postId){
+    public void saveLike(Account account, long postId){
         Post post = findByIdOrThrowNotFoundException(postId);
 
         if (postLikeRepository.findByAccountAndPost(account, post) != null) {
@@ -111,7 +111,11 @@ public class PostService {
     }
 
     @Transactional
-    public void unlike(Account account, long postId){
+    public void deleteLike(Account account, long postId, long userId){
+        if (account.getId() != userId) {
+            throw new AccessDeniedException("삭제 권한이 없습니다.");
+        }
+
         Post post = findByIdOrThrowNotFoundException(postId);
         PostLike postLike = postLikeRepository.findByAccountAndPost(account, post);
 
@@ -120,5 +124,20 @@ public class PostService {
         }
 
         postLikeRepository.delete(postLike);
+    }
+
+    @Transactional
+    public void findLikeByUserId(Account account, long postId, long userId){
+        if (account.getId() != userId) {
+            throw new AccessDeniedException("조회 권한이 없습니다.");
+        }
+
+        Post post = findByIdOrThrowNotFoundException(postId);
+
+        PostLike postLike = postLikeRepository.findByAccountAndPost(account, post);
+
+        if (postLike == null) {
+            throw new NotFoundException("좋아요한 기록이 없습니다.");
+        }
     }
 }
