@@ -65,7 +65,7 @@ public class AccountService implements UserDetailsService {
     public boolean checkNickname(String nickname) {
         //이 처리를 서비스단에서? 컨트롤러 단에서?
         if (accountRepository.existsByNickname(nickname)) {
-            throw new AlreadyExistsException("이미 존재하는 이메일 입니다.");
+            throw new AlreadyExistsException("이미 존재하는 닉네임 입니다.");
         }
         return true;
     }
