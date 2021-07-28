@@ -30,7 +30,7 @@ public class PostController {
         return new ResponseEntity(posts,HttpStatus.OK);
     }*/
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity findAll() {
         List<PostResponseDto> posts = postService.findAll();
         return new ResponseEntity(posts, HttpStatus.OK);
