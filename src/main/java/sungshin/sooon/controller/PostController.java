@@ -61,16 +61,28 @@ public class PostController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-
-    @PostMapping("/{postId}/likes")
-    public ResponseEntity like(@CurrentUser Account account, @PathVariable long postId) {
-        postService.like(account, postId);
-        return new ResponseEntity(HttpStatus.OK);
+    @GetMapping("/{postId}/likes/{userId}") //github style !
+    public ResponseEntity findLikeByUserId(@CurrentUser Account account, @PathVariable long postId, @PathVariable long userId) {
+        postService.findLikeByUserId(account, postId, userId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/{postId}/likes")
-    public ResponseEntity unlike(@CurrentUser Account account, @PathVariable long postId) {
-        postService.unlike(account, postId);
+    @PostMapping("/{postId}/likes")
+    public ResponseEntity saveLike(@CurrentUser Account account, @PathVariable long postId) {
+        postService.saveLike(account, postId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    /*
+    * github style! 쿼리가 좋을까?
+    * 만약 어떤 resource를 식별하고 싶으면 Path Variable을 사용하고,
+    * 정렬이나 필터링을 한다면 Query Parameter를 사용하는 것이 Best Practice이다.
+    * URI는 리소스 TYPE의 특정 인스턴스를 고유하게 식별하는 리소스 식별자
+    * URI should only consist of parts that will never change and will continue to uniquely identify that resource throughout its lifetime
+     */
+    @DeleteMapping("/{postId}/likes/{userId}")
+    public ResponseEntity deleteLike(@CurrentUser Account account, @PathVariable long postId, @PathVariable long userId) {
+        postService.deleteLike(account, postId, userId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
