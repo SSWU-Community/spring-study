@@ -37,9 +37,9 @@ public class PostController {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity findById(@PathVariable long id) {
-        PostResponseDto post = postService.findById(id);
+    @GetMapping("/{postId}")
+    public ResponseEntity findById(@PathVariable long postId) {
+        PostResponseDto post = postService.findById(postId);
         return new ResponseEntity(post, HttpStatus.OK);
     }
 
@@ -49,15 +49,15 @@ public class PostController {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity update(@CurrentUser Account account, @PathVariable long id, @Valid @RequestBody PostRequestDto postRequestDto) {
-        return new ResponseEntity(postService.update(account, id, postRequestDto),HttpStatus.OK);
+    @PutMapping("/{postId}")
+    public ResponseEntity update(@CurrentUser Account account, @PathVariable long postId, @Valid @RequestBody PostRequestDto postRequestDto) {
+        return new ResponseEntity(postService.update(account, postId, postRequestDto),HttpStatus.OK);
     }
 
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity delete(@CurrentUser Account account, @PathVariable long id) {
-        postService.delete(account, id);
+    @DeleteMapping("/{postId}")
+    public ResponseEntity delete(@CurrentUser Account account, @PathVariable long postId) {
+        postService.delete(account, postId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
