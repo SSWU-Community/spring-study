@@ -6,6 +6,7 @@ import sungshin.sooon.domain.entity.Post;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -17,6 +18,7 @@ public class PostResponseDto {
     private String title;
     private String content;
     private boolean isAnonymous;
+    private long likesCount;
 
     //save할때는 requestDto를 entity로, find를 할 때는 entity를 responseDto로 전환하는 과정을 거치게 됩니다.
     public static PostResponseDto of(Post post) {
@@ -28,6 +30,7 @@ public class PostResponseDto {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .isAnonymous(post.isAnonymous())
+                .likesCount(post.getLikesCount())
                 .build();
     }
 }
