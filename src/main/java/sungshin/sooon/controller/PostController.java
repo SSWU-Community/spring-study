@@ -43,7 +43,7 @@ public class PostController {
         return new ResponseEntity(post, HttpStatus.OK);
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity save(@CurrentUser Account account, @Valid @RequestBody PostRequestDto postRequestDto) {
         return new ResponseEntity(postService.save(account, postRequestDto), HttpStatus.CREATED);
     }
