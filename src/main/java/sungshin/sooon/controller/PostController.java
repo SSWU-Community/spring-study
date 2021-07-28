@@ -51,7 +51,7 @@ public class PostController {
 
     @PutMapping("/{postId}")
     public ResponseEntity update(@CurrentUser Account account, @PathVariable long postId, @Valid @RequestBody PostRequestDto postRequestDto) {
-        return new ResponseEntity(postService.update(account, postId, postRequestDto),HttpStatus.OK);
+        return new ResponseEntity(postService.update(account, postId, postRequestDto), HttpStatus.OK);
     }
 
 
@@ -61,18 +61,16 @@ public class PostController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-    /*
-    @PostMapping("/{id}/likes")
-    public ResponseEntity like(@PathVariable long id)
-    {
-        postService.like(id);
+
+    @PostMapping("/{postId}/likes")
+    public ResponseEntity like(@CurrentUser Account account, @PathVariable long postId) {
+        postService.like(account, postId);
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}/likes")
-    public ResponseEntity unlike(@PathVariable long id)
-    {
-        postService.unlike(id);
-        return new ResponseEntity(HttpStatus.OK);
-    }*/
+    @DeleteMapping("/{postId}/likes")
+    public ResponseEntity unlike(@CurrentUser Account account, @PathVariable long postId) {
+        postService.unlike(account, postId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }
