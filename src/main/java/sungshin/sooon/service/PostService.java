@@ -2,6 +2,9 @@ package sungshin.sooon.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +13,7 @@ import sungshin.sooon.domain.entity.Post;
 import sungshin.sooon.domain.entity.PostLike;
 import sungshin.sooon.domain.repository.PostLikeRepository;
 import sungshin.sooon.domain.repository.PostRepository;
+import sungshin.sooon.dto.PagingPostResponseDto;
 import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
 import sungshin.sooon.exception.AlreadyExistsException;
@@ -50,6 +54,33 @@ public class PostService {
                 .stream()
                 .map(PostResponseDto::of)
                 .collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public PagingPostResponseDto findAllOrderBy(Integer page, Integer size, String order) {
+        PageRequest pageRequest;
+        if (order.equals("likeCount")){
+            pageRequest = PageRequest.of(page, size, Sort.by("likeCount").descending());
+            //여기서 sort에 넘겨줘야하는 정보는 도메인 클래스의 Property 혹은 alais 여야 합니다.
+            //@Fomula 수식에 작성하는 모든 것이 ORDER BY 절에 전달되므로 새 열을 정렬 순서로 사용할 수 있습니다.
+            // https://stackoverflow.com/questions/37139985/spring-data-jpa-is-it-possible-to-sort-on-a-calculated-property
+        } else if (order.equals("createdAt")){
+            pageRequest = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        } else {
+            throw new NotFoundException("존재하지 않는 정렬 값입니다.");
+        }
+
+        Slice<Post> posts = postRepository.findAll(pageRequest); //slice는 total count쿼리를 날리지 않기때문에 성능이 더 낫다. 그러나 findAll의 Return값은 Page
+
+        List<PostResponseDto> postResponseDto = posts.stream()
+                .map(PostResponseDto::of)
+                .collect(Collectors.toList());
+
+        return PagingPostResponseDto.builder()
+                .currentPage(posts.getNumber())
+                .currentSize(posts.getNumberOfElements())
+                .hasNextPage(posts.hasNext())
+                .posts(postResponseDto).build();
     }
 
     @Transactional(readOnly = true)

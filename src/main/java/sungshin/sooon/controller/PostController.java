@@ -12,7 +12,7 @@ import sungshin.sooon.dto.PostResponseDto;
 import sungshin.sooon.service.PostService;
 
 import javax.validation.Valid;
-import java.util.List;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,9 +31,8 @@ public class PostController {
     }*/
 
     @GetMapping("")
-    public ResponseEntity findAll() {
-        List<PostResponseDto> posts = postService.findAll();
-        return new ResponseEntity(posts, HttpStatus.OK);
+    public ResponseEntity findAllByPaging(@RequestParam @NotNull Integer page, @RequestParam @NotNull Integer size, @RequestParam(defaultValue = "createdAt") String order) {
+        return new ResponseEntity(postService.findAllOrderBy(page, size, order), HttpStatus.OK);
     }
 
 
