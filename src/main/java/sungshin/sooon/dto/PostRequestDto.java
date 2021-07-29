@@ -20,19 +20,19 @@ public class PostRequestDto {
     @NotBlank(message = "content is required")
     private String content;
 
-    @NotNull(message = "isAnonymous is required")
-    private boolean isAnonymous;
+    @NotNull(message = "anonymous is required")
+    private boolean anonymous;
 
     public Post toPost() {
         return Post.builder()
                 .title(title)
                 .content(content)
-                .isAnonymous(isAnonymous)
+                .isAnonymous(anonymous)
                 .build();
     }
 
     public void apply(Post post) {
-        post.update(title, content, isAnonymous);
+        post.update(title, content, anonymous);
         // https://github.com/hojinDev/restdocs-sample/blob/d820195792af03057670552341b9f8e5f9d1b0b3/src/main/java/com/example/demo/service/dto/UnitUpdateDto.java#L21
     }
 }
