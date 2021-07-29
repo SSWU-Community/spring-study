@@ -2,18 +2,13 @@ package sungshin.sooon.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import sungshin.sooon.dto.PostCommentRequestDto;
 import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.CurrentUser;
-import sungshin.sooon.model.Post;
+import sungshin.sooon.service.AmazonS3Service;
 import sungshin.sooon.service.PostService;
 
 import java.nio.file.AccessDeniedException;
@@ -24,15 +19,9 @@ import java.nio.file.AccessDeniedException;
 public class PostController {
 
     private final PostService postService;
+    private final AmazonS3Service amazonS3Service;
 
     // 전체 글 리스트
-    @GetMapping("/list")
-    public Page<Post> list(@PageableDefault(page = 1, sort = "created_at", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        Page<Post> postList = postService.getList(pageable);
-        model.addAttribute("postList", postList);
-
-        return postService.getList(pageable);
-    }
 
     // 게시글 저장
     @PostMapping("")
@@ -62,15 +51,15 @@ public class PostController {
 
     // 게시글 좋아요
     @RequestMapping("/{post_id}/like")
-    public ResponseEntity like(@CurrentUser Account account, @PathVariable Long postId) {
+    public ResponseEntity saveLike(@CurrentUser Account account, @PathVariable Long postId) {
         postService.like(account, postId);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     // 댓글 저장
-    @PostMapping("/{post_id}/comment")
-    public ResponseEntity savePostComment(@CurrentUser Account account, @RequestBody PostCommentRequestDto postCommentRequestDto){
-        return new ResponseEntity(postService.savePostComment(account, postCommentRequestDto), HttpStatus.CREATED);
+    @PostMapping("/{post_id}/comment/{comment_id}")
+    public ResponseEntity savePostComment(@CurrentUser Account account, @PathVariable Long postId, @RequestBody PostCommentRequestDto postCommentRequestDto){
+        return new ResponseEntity(postService.savePostComment(account, postId, postCommentRequestDto), HttpStatus.CREATED);
     }
 
     // 댓글 삭제

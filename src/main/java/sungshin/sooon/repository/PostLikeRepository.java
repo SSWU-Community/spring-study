@@ -8,5 +8,5 @@ import sungshin.sooon.model.PostLike;
 import java.util.Optional;
 
 public interface PostLikeRepository extends JpaRepository<PostLike, Long> {
-    Optional<PostLike> findByPostAndUser(Post post, Account account);
+    Optional<PostLike> findByPostAndUser(Account account, Post post);
 }

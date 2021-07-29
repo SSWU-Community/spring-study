@@ -25,6 +25,8 @@ public class PostRequestDto {
 
     private LocalDateTime created_at;
 
+    private Long imageId;
+
     public Post toPost() {
         return Post.builder()
                 .title(title)

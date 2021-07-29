@@ -15,16 +15,27 @@ import static javax.persistence.FetchType.LAZY;
 @DynamicUpdate
 public class PostImages {
 
-    @Id @GeneratedValue
-    @Column(name = "post_image_id", nullable = false)
-    private long id;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_images_id", nullable = false)
+    private Long id;
+
+    @Column(nullable = false)
+    private String imageUrl;
+
+    @Column(nullable = false)
+    private Long orderNum;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "FK_Image_Board"))
-    private Post post_id;
+    private Post post;
 
-    @Column(nullable = false)
-    private String image_url;
+    public void setPost(Post post) {
+        this.post = post;
 
-    private Long order_num;
+        if(!post.getPostImages().contains(this)) {
+            post.getPostImages().add(this);
+        }
+    }
+
+
 }

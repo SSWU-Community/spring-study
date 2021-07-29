@@ -12,18 +12,17 @@ import sungshin.sooon.dto.PostCommentRequestDto;
 import sungshin.sooon.dto.PostCommentResponseDto;
 import sungshin.sooon.dto.PostRequestDto;
 import sungshin.sooon.dto.PostResponseDto;
+import sungshin.sooon.exception.AlreadyExistsException;
 import sungshin.sooon.exception.PostNotFound;
 import sungshin.sooon.model.Account;
 import sungshin.sooon.model.Post;
 import sungshin.sooon.model.PostComment;
 import sungshin.sooon.model.PostLike;
-import sungshin.sooon.repository.AccountRepository;
 import sungshin.sooon.repository.PostCommentRepository;
-import sungshin.sooon.repository.PostRepository;
 import sungshin.sooon.repository.PostLikeRepository;
+import sungshin.sooon.repository.PostRepository;
 
 import javax.transaction.Transactional;
-
 import java.nio.file.AccessDeniedException;
 import java.util.Optional;
 
@@ -31,13 +30,13 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Slf4j
 public class PostService {
-    private final AccountRepository accountRepository;
+
     private final PostRepository postRepository;
     private final PostLikeRepository postLikeRepository;
     private final PostCommentRepository postCommentRepository;
 
-    private Post getPostInService(Long post_id) {
-        Post post = postRepository.findById(post_id)
+    private Post getPostInService(Long postId) {
+        Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new PostNotFound("해당 게시물이 존재하지 않습니다."));
         return post;
     }
@@ -49,12 +48,7 @@ public class PostService {
     }
 
     // 게시글 전체 리스트
-    public Page<Post> getList(Pageable pageable) {
-        int page = pageable.getPageNumber() == 0 ? 0 : pageable.getPageNumber() - 1;
-        pageable = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "post_id"));
 
-        return postRepository.findAll(pageable);
-    }
 
     // CREATE
     @Transactional
@@ -66,14 +60,14 @@ public class PostService {
 
     // READ
     @Transactional
-    public PostResponseDto read(Long post_id) {
-        return PostResponseDto.from(getPostInService(post_id));
+    public PostResponseDto read(Long postId) {
+        return PostResponseDto.from(getPostInService(postId));
     }
 
     // UPDATE
     @Transactional
-    public PostResponseDto update(Account account, Long post_id, PostRequestDto postRequestDto) throws AccessDeniedException {
-        Post post = getPostInService(post_id);
+    public PostResponseDto update(Account account, Long postId, PostRequestDto postRequestDto) throws AccessDeniedException {
+        Post post = getPostInService(postId);
         if (post.getAccount().getId().equals(account.getId())) {
             throw new AccessDeniedException("게시글의 수정 권한이 없습니다.");
         }
@@ -83,8 +77,8 @@ public class PostService {
 
     // DELETE
     @Transactional
-    public void delete(Account account, Long post_id) throws AccessDeniedException {
-        Post post = getPostInService(post_id);
+    public void delete(Account account, Long postId) throws AccessDeniedException {
+        Post post = getPostInService(postId);
         if (post.getAccount().getId().equals(account.getId())) {
             throw new AccessDeniedException("게시글의 삭제 권한이 없습니다.");
         }
@@ -94,34 +88,32 @@ public class PostService {
 
     // 좋아요
     @Transactional
-    public void like(Account user, Long post_id) {
-        Post post = getPostInService(post_id);
-        Account account = getUserInService(user);
+    public void like(Account user, Long postId) {
+        Post post = getPostInService(postId);
 
-        Optional<PostLike> byPostAndUser = postLikeRepository.findByPostAndUser(post, account);
+        Optional<PostLike> byPostAndUser = postLikeRepository.findByPostAndUser(user, post);
 
         byPostAndUser.ifPresentOrElse(
-                post_like -> {
-                    postLikeRepository.delete(post_like);
-                    post.discountLike(post_like);
+                postLike -> {
+                    postLikeRepository.delete(postLike);
+                    post.discountLike(postLike);
                 },
                 () -> {
-                    PostLike post_like = PostLike.builder().build();
-
-                    post_like.mappingBoard(post);
-                    post_like.mappingAccount(account);
-                    post.updateLikeCount();
-
-                    postLikeRepository.save(post_like);
+                    PostLike postLike = new PostLike();
+                    postLike.setAccount(user);
+                    postLike.setPost(post);
+                    postLikeRepository.save(postLike);
                 }
         );
     }
 
     // 댓글 생성
     @Transactional
-    public PostCommentResponseDto savePostComment(Account account, PostCommentRequestDto postCommentRequestDto) {
+    public PostCommentResponseDto savePostComment(Account account, Long postId, PostCommentRequestDto postCommentRequestDto) {
+        Post post = getPostInService(postId);
         PostComment comment = postCommentRequestDto.toComment();
         comment.setAccount(account);
+        comment.setPost(post);
         return PostCommentResponseDto.from(postCommentRepository.save(comment));
     }
 

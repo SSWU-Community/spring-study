@@ -23,6 +23,8 @@ public class PostResponseDto {
 
     private LocalDateTime created_at;
 
+    private Long imageId;
+
     public static PostResponseDto from(Post post) {
         return PostResponseDto.builder()
                 .post_id(post.getId())
@@ -31,6 +33,7 @@ public class PostResponseDto {
                 .content(post.getContent())
                 .is_anonymous(post.getIs_anonymous())
                 .created_at(post.getCreated_at())
+                .imageId(post.getImageId())
                 .build();
     }
 }

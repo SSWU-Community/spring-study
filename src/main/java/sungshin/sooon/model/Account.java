@@ -16,7 +16,8 @@ import java.util.List;
 @DynamicUpdate
 public class Account {
 
-    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "account_id", nullable = false)
     private Long id;
 
@@ -31,24 +32,12 @@ public class Account {
     private LocalDateTime registeredDateTime;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
-    private List<PostComment> commentList = new ArrayList<>();
+    private List<PostComment> postComments = new ArrayList<>();
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
-    private List<PostLike> postLikeList = new ArrayList<>();
+    private List<PostLike> postLikes = new ArrayList<>();
 
-
-    public void mappingPost(Post post) {
-        postList.add(post);
-    }
-
-    public void mappingComment(PostComment comment) {
-        commentList.add(comment);
-    }
-
-    public void mappingPostLike(PostLike postLike) {
-        postLikeList.add(postLike);
-    }
 }

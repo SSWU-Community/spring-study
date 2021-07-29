@@ -24,19 +24,24 @@ public class PostLike {
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "FK_PostLike_Account"))
     private Account account;
 
+    public void setAccount(Account account) {
+        this.account = account;
+
+        if(!account.getPostLikes().contains(this)) {
+            account.getPostLikes().add(this);
+        }
+    }
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "post_id", foreignKey = @ForeignKey(name = "FK_PostLike_Board"))
     private Post post;
 
-
-    public void mappingAccount(Account account) {
-        this.account = account;
-        account.mappingPostLike(this);
-    }
-
-    public void mappingBoard(Post post) {
+    public void setPost(Post post) {
         this.post = post;
-        post.mappingPostLike(this);
+
+        if(!post.getPostLikes().contains(this)) {
+            post.getPostLikes().add(this);
+        }
     }
 
 }

@@ -28,28 +28,58 @@ public class Post {
     @Column(columnDefinition = "TEXT", nullable = false)
     private String content;
 
+    @Column(nullable = false)
+    private Boolean is_anonymous;
+
+    @Column
+    private LocalDateTime created_at;
+
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "FK_account_post"))
     private Account account;
 
+    public void setAccount(Account account) {
+        this.account = account;
 
-    @Column(nullable = false)
-    private Boolean is_anonymous;
-
-    private LocalDateTime created_at;
-
-    @Builder.Default
-    @Transient
-    private Long likeCount = 0L;
-
-    @Transient
-    private Long commentCount = 0L;
+        if(!account.getPosts().contains(this)) {
+            account.getPosts().add(this);
+        }
+    }
 
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<PostComment> commentList = new ArrayList<>();
+    private List<PostComment> postComments = new ArrayList<>();
+
+    public void addPostComment(PostComment postComment) {
+        this.postComments.add(postComment);
+
+        if(postComment.getPost() != this) {
+            postComment.setPost(this);
+            postComment.setAccount(account);
+        }
+    }
 
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<PostLike> postLikeList = new ArrayList<>();
+    private List<PostLike> postLikes = new ArrayList<>();
+
+    public void addPostLike(PostLike postLike) {
+        this.postLikes.add(postLike);
+
+        if(postLike.getPost() != this) {
+            postLike.setPost(this);
+            postLike.setAccount(account);
+        }
+    }
+
+    @OneToMany(mappedBy = "post")
+    private List<PostImages> postImages = new ArrayList<>();
+
+    public void addPostImages(PostImages postImages) {
+        this.postImages.add(postImages);
+
+        if(postImages.getPost() != this) {
+            postImages.setPost(this);
+        }
+    }
 
     public void update(String title, String content, Boolean is_anonymous) {
         this.title = title;
@@ -57,25 +87,23 @@ public class Post {
         this.is_anonymous = is_anonymous;
     }
 
-    public void mappingAccount(Account account) {
-        this.account = account;
-        account.mappingPost(this);
-    }
-
-    public void mappingComment(PostComment comment) {
-        this.commentList.add(comment);
-    }
-
-    public void mappingPostLike(PostLike postLike) {
-        this.postLikeList.add(postLike);
-    }
+    @Builder.Default
+    @Transient
+    private Long likeCount = 0L;
 
     public void updateLikeCount() {
-        this.likeCount = (long) this.postLikeList.size();
+        this.likeCount = (long) this.postLikes.size();
     }
 
     public void discountLike(PostLike postLike) {
-        this.postLikeList.remove(postLike);
+        this.postLikes.remove(postLike);
+    }
+
+    @Transient
+    private Long commentCount = 0L;
+
+    public void updateCommentCount() {
+        this.commentCount = (long) this.postComments.size();
     }
 
 }
