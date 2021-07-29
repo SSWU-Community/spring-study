@@ -74,11 +74,11 @@ public class PostController {
     }
 
     /*
-    * github style! 쿼리가 좋을까?
-    * 만약 어떤 resource를 식별하고 싶으면 Path Variable을 사용하고,
-    * 정렬이나 필터링을 한다면 Query Parameter를 사용하는 것이 Best Practice이다.
-    * URI는 리소스 TYPE의 특정 인스턴스를 고유하게 식별하는 리소스 식별자
-    * URI should only consist of parts that will never change and will continue to uniquely identify that resource throughout its lifetime
+     * github style! 쿼리가 좋을까?
+     * 만약 어떤 resource를 식별하고 싶으면 Path Variable을 사용하고,
+     * 정렬이나 필터링을 한다면 Query Parameter를 사용하는 것이 Best Practice이다.
+     * URI는 리소스 TYPE의 특정 인스턴스를 고유하게 식별하는 리소스 식별자
+     * URI should only consist of parts that will never change and will continue to uniquely identify that resource throughout its lifetime
      */
     @DeleteMapping("/{postId}/likes/{userId}")
     public ResponseEntity deleteLike(@CurrentUser Account account, @PathVariable long postId, @PathVariable long userId) {

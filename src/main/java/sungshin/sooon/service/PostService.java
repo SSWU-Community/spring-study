@@ -78,7 +78,7 @@ public class PostService {
         postRepository.delete(post);
     }
 
-    public Post findByIdOrThrowNotFoundException(Long id){
+    public Post findByIdOrThrowNotFoundException(Long id) {
         Post post = postRepository
                 .findById(id)
                 .orElseThrow(() -> new NotFoundException("게시글이 존재하지 않습니다."));
@@ -99,7 +99,7 @@ public class PostService {
     }
 
     @Transactional
-    public void saveLike(Account account, long postId){
+    public void saveLike(Account account, long postId) {
         Post post = findByIdOrThrowNotFoundException(postId);
 
         if (postLikeRepository.findByAccountAndPost(account, post) != null) {
@@ -111,7 +111,7 @@ public class PostService {
     }
 
     @Transactional
-    public void deleteLike(Account account, long postId, long userId){
+    public void deleteLike(Account account, long postId, long userId) {
         if (account.getId() != userId) {
             throw new AccessDeniedException("삭제 권한이 없습니다.");
         }
@@ -127,7 +127,7 @@ public class PostService {
     }
 
     @Transactional
-    public void findLikeByUserId(Account account, long postId, long userId){
+    public void findLikeByUserId(Account account, long postId, long userId) {
         if (account.getId() != userId) {
             throw new AccessDeniedException("조회 권한이 없습니다.");
         }

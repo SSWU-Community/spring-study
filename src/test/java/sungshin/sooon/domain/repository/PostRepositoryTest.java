@@ -25,7 +25,7 @@ class PostRepositoryTest {
     private AccountRepository accountRepository;
 
     @AfterEach
-    void tearDown(){
+    void tearDown() {
         postRepository.deleteAll();
         accountRepository.deleteAll();
     }
@@ -54,7 +54,7 @@ class PostRepositoryTest {
         List<Post> posts = postRepository.findAllByAccountOrderByCreatedAtDesc(account);
 
         //then
-        assertThat(posts).containsSequence(post2,post1);
+        assertThat(posts).containsSequence(post2, post1);
     }
 
     @Test

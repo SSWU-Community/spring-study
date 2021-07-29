@@ -1,11 +1,12 @@
 package sungshin.sooon.dto;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
 import sungshin.sooon.domain.entity.Account;
 
 @Data
 @Builder
-public class AccountResponseDto{
+public class AccountResponseDto {
     private Long id;
     private String email;
     private String nickname;

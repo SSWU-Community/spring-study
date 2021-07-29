@@ -31,17 +31,19 @@ class PostServiceTest {
     private PostService postService;
 
     // @Autowired 우리는 이미 유닛테스트를 통해 postRepository 를 충분히 검증했다. (심지어 jpa 에서 자동완성으로 제공하는 메소드는 이미 충분히 검증되어있음) => Mockito 사용!
-    @Mock private PostRepository postRepository;
+    @Mock
+    private PostRepository postRepository;
     //private AutoCloseable autoCloseable; @ExtendWith(MockitoExtension.class)로 대체
 
-    @Mock private PostLikeRepository postLikeRepository;
+    @Mock
+    private PostLikeRepository postLikeRepository;
 
     @BeforeEach
     void setUp() {
         /* @ExtendWith(MockitoExtension.class)로 대체
         autoCloseable = MockitoAnnotations.openMocks(this); //이 클래스의 모든 Mock 초기화
         */
-        postService = new PostService(postRepository,postLikeRepository);
+        postService = new PostService(postRepository, postLikeRepository);
     }
 
     /* @ExtendWith(MockitoExtension.class)로 대체
@@ -149,7 +151,7 @@ class PostServiceTest {
 
         //when
         //then
-        assertThatThrownBy(()->postService.delete(account1, id)).isInstanceOf(AccessDeniedException.class).hasMessageContaining("삭제 권한이 없습니다.");
+        assertThatThrownBy(() -> postService.delete(account1, id)).isInstanceOf(AccessDeniedException.class).hasMessageContaining("삭제 권한이 없습니다.");
         verify(postRepository, never()).delete(any());
     }
 
@@ -162,7 +164,7 @@ class PostServiceTest {
 
         //when
         //then
-        assertThatThrownBy(()->postService.delete(account, id)).isInstanceOf(NotFoundException.class).hasMessageContaining("게시글이 존재하지 않습니다.");
+        assertThatThrownBy(() -> postService.delete(account, id)).isInstanceOf(NotFoundException.class).hasMessageContaining("게시글이 존재하지 않습니다.");
         verify(postRepository, never()).delete(any());
     }
 

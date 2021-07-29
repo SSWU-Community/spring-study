@@ -71,27 +71,27 @@ class AccountControllerTest {
 
     @Test
     void checkEmail() throws Exception {
-            //given
-            String email = "20181017@sungshin.ac.kr";
-            given(accountService.checkEmail(email))
-                    .willReturn(true);
+        //given
+        String email = "20181017@sungshin.ac.kr";
+        given(accountService.checkEmail(email))
+                .willReturn(true);
 
-            //when
-            ResultActions result = this.mockMvc.perform(
-                    get("/api/v1/auth/check-email").param("email", email)
-                            .accept(MediaType.APPLICATION_JSON)
-            );
+        //when
+        ResultActions result = this.mockMvc.perform(
+                get("/api/v1/auth/check-email").param("email", email)
+                        .accept(MediaType.APPLICATION_JSON)
+        );
 
-            //then
-            result.andExpect(status().isOk())
-                    .andDo(print())
-                    .andDo(document("check-email",
-                            getDocumentRequest(),
-                            getDocumentResponse(),
-                            requestParameters(
-                                    parameterWithName("email").description("이메일")
-                            )
-                    ));
+        //then
+        result.andExpect(status().isOk())
+                .andDo(print())
+                .andDo(document("check-email",
+                        getDocumentRequest(),
+                        getDocumentResponse(),
+                        requestParameters(
+                                parameterWithName("email").description("이메일")
+                        )
+                ));
     }
 
     @Test
@@ -131,17 +131,17 @@ class AccountControllerTest {
                         .nickname("chaeppy")
                         .build());
 
-            Request request = new Request();
-            request.email ="20181017@sungshin.ac.kr";
-            request.nickname = "chaeppy";
-            request.password = "asbsaaaced12!";
+        Request request = new Request();
+        request.email = "20181017@sungshin.ac.kr";
+        request.nickname = "chaeppy";
+        request.password = "asbsaaaced12!";
 
         //when
         ResultActions result = this.mockMvc.perform(
                 post("/api/v1/auth/signup")
-                .content(objectMapper.writeValueAsString(request))
-                .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
         );
 
         //then
