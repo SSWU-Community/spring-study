@@ -1,32 +1,36 @@
 package sungshin.sooon.dto;
 
-import sungshin.sooon.domain.entity.Post;
+import lombok.Builder;
+import lombok.Data;
 import sungshin.sooon.domain.entity.PostComment;
 
 import java.time.LocalDateTime;
 
+@Data
+@Builder
 public class CommentResponseDto {
-    private long commentId;
-
+    private long id;
     private String comment;
-    private boolean isAnonymous;
-    private long commentId;
+    private boolean anonymous;
+    private long anonymousNum;
     private LocalDateTime createdAt;
 
-    private long authorId;
-    private String authorNickname;
+    private long postId;
+    private long accountId;
+    private String accountNickname;
 
-    //save할때는 requestDto를 entity로, find를 할 때는 entity를 responseDto로 전환하는 과정을 거치게 됩니다.
-    public static PostResponseDto of(Post post) {
-        return PostResponseDto
+
+    public static CommentResponseDto of(PostComment postComment) {
+        return CommentResponseDto
                 .builder()
-                .id(post.getId())
-                .nickname(post.getAccount().getNickname())
-                .createdAt(post.getCreatedAt())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .isAnonymous(post.isAnonymous())
-                .likesCount(post.getLikesCount())
+                .id(postComment.getId())
+                .comment(postComment.getComment())
+                .anonymous(postComment.isAnonymous())
+                .anonymousNum(postComment.getOrderNum())
+                .createdAt(postComment.getCreatedAt())
+                .postId(postComment.getPost().getId())
+                .accountId(postComment.getAccount().getId())
+                .accountNickname(postComment.getAccount().getNickname())
                 .build();
     }
 }
