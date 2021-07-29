@@ -3,41 +3,41 @@ package sungshin.sooon.model;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
-@Setter
-@EqualsAndHashCode(of = "id")
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
 public class Account {
 
-    @Id @GeneratedValue
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "account_id", nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique = true, length = 20, nullable = false)
     private String email;
 
-    @Column(nullable = false)
+    @Column(length = 16, nullable = false)
     private String password;
 
     private String nickname;
 
     private LocalDateTime registeredDateTime;
 
-    // 인증 여부
-    private boolean isConfirmed;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
+    private List<Post> posts = new ArrayList<>();
 
-    /**
-     *
-     * 기타 추가할 컬럼(필드)들 추가해주시면 됩니다~
-     *
-     */
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
+    private List<PostComment> postComments = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
+    private List<PostLike> postLikes = new ArrayList<>();
+
 }

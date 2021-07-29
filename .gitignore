@@ -33,7 +33,17 @@ out/
 /nbbuild/
 /dist/
 /nbdist/
-/.nb-gradle/
+/.nb-gradle/q
+
 
 ### VS Code ###
 .vscode/
+
+### Gradle ###
+.gradle
+build/
+**/build/
+!gradle-wrapper.jar
+
+java_pid10712.hprof
+java_pid10712.hprof.djq38s.b.ij/

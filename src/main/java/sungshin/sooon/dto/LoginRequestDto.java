@@ -4,22 +4,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import sungshin.sooon.model.Account;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class LoginRequest {
-    private String email;
-    private String password;
+public class LoginRequestDto {
 
-    public Account toAccount(PasswordEncoder passwordEncoder) {
-        return Account.builder()
-                .email(email)
-                .password(passwordEncoder.encode(password))
-                .build();
-    }
+    @NotBlank(message = "Email should not be blank")
+    @Email
+    private String email;
+
+    @NotBlank(message = "Password should not be blank")
+    private String password;
 
     public UsernamePasswordAuthenticationToken toAuthentication() {
         return new UsernamePasswordAuthenticationToken(email, password);
