@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import sungshin.sooon.domain.entity.Post;
 import sungshin.sooon.domain.entity.PostComment;
 
 import javax.validation.constraints.NotBlank;
@@ -19,16 +18,16 @@ public class CommentRequestDto {
     private String comment;
 
     @NotNull(message = "isAnonymous is required")
-    private boolean isAnonymous;
+    private boolean anonymous;
 
     public PostComment toComment() {
         return PostComment.builder()
                 .comment(comment)
-                .isAnonymous(isAnonymous)
+                .isAnonymous(anonymous)
                 .build();
     }
 
     public void apply(PostComment postComment) {
-        postComment.update(comment,isAnonymous);
+        postComment.update(comment, anonymous);
     }
 }
