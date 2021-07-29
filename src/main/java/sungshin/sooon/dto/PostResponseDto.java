@@ -33,7 +33,7 @@ public class PostResponseDto {
                 .title(post.getTitle())
                 .content(post.getContent())
                 .anonymous(post.isAnonymous())
-                .likesCount(post.getLikesCount())
+                .likesCount(post.getLikeCount())
                 .build();
     }
 }

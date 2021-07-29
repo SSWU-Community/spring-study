@@ -146,7 +146,7 @@ public class Post extends BaseEntity {
     }
 
     @Formula("(select count(1) from post_like as pl where pl.post_id = post_id)")
-    private long likesCount;
+    private long likeCount;
     /*
      *
      * 단순히 카운트만을 조회하기 위해서 연관 엔터티를 사용한다면 (list.size())
