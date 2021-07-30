@@ -1,0 +1,16 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sooon_db?useSSL=false&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: yourpassword
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    generate-ddl: true # 정의한 model 객체들을 애플리케이션 구동 시 ddl을 실행시켜 db table을 생성하기 위함
+    show-sql: true
+jwt:
+  secret: bHVuaXQtc3ByaW5nLWJvb3QtcHJvamVjdC1ieS0yeWVzZXVsLWxvbmdlci1sb25nZXItbG9uZ2VyLWxvbmdlci1sdW5pdC1wbGVhc2U=

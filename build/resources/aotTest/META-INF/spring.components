@@ -1,0 +1,16 @@
+#
+#Mon Jul 05 13:59:39 KST 2021
+sungshin.sooon.repository.AccountRepository=org.springframework.data.repository.Repository
+sungshin.sooon.config.AppConfig=org.springframework.stereotype.Component
+sungshin.sooon.SooonApplication=org.springframework.stereotype.Component,org.springframework.boot.SpringBootConfiguration
+sungshin.sooon.config.TokenProvider=org.springframework.stereotype.Component
+sungshin.sooon.config.JwtAuthenticationEntryPoint=org.springframework.stereotype.Component
+sungshin.sooon.model.Account=javax.persistence.Entity
+sungshin.sooon.model.RefreshToken=javax.persistence.Entity
+sungshin.sooon.service.AccountService=org.springframework.stereotype.Component
+sungshin.sooon.repository.RefreshTokenRepository=org.springframework.data.repository.Repository
+sungshin.sooon.controller.AccountController=org.springframework.stereotype.Component
+sungshin.sooon.config.JwtFilter=org.springframework.stereotype.Component
+sungshin.sooon.config.SecurityConfig=org.springframework.stereotype.Component
+sungshin.sooon.config.JwtAccessDeniedHandler=org.springframework.stereotype.Component
+sungshin.sooon.config.HttpLogoutSuccessHandler=org.springframework.stereotype.Component

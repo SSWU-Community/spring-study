@@ -1,0 +1,137 @@
+[
+  {
+    "name": "java.lang.Throwable"
+  },
+  {
+    "name": "org.springframework.security.web.authentication.WebAuthenticationDetails"
+  },
+  {
+    "name": "java.lang.Float"
+  },
+  {
+    "name": "org.springframework.security.authentication.BadCredentialsException"
+  },
+  {
+    "name": "org.springframework.security.core.userdetails.UsernameNotFoundException"
+  },
+  {
+    "name": "java.lang.Double"
+  },
+  {
+    "name": "java.util.Date"
+  },
+  {
+    "name": "org.springframework.security.authentication.ProviderNotFoundException"
+  },
+  {
+    "name": "org.springframework.security.authentication.LockedException"
+  },
+  {
+    "name": "org.springframework.security.core.authority.SimpleGrantedAuthority"
+  },
+  {
+    "name": "org.springframework.security.core.userdetails.User"
+  },
+  {
+    "name": "java.util.HashMap"
+  },
+  {
+    "name": "org.springframework.security.core.userdetails.User$AuthorityComparator"
+  },
+  {
+    "name": "org.springframework.security.authentication.CredentialsExpiredException"
+  },
+  {
+    "name": "java.lang.Integer"
+  },
+  {
+    "name": "java.util.TreeSet"
+  },
+  {
+    "name": "java.util.ArrayList"
+  },
+  {
+    "name": "java.lang.Long"
+  },
+  {
+    "name": "java.util.Collections$UnmodifiableRandomAccessList"
+  },
+  {
+    "name": "java.util.Locale"
+  },
+  {
+    "name": "org.springframework.security.authentication.DisabledException"
+  },
+  {
+    "name": "java.lang.Boolean"
+  },
+  {
+    "name": "java.lang.StackTraceElement"
+  },
+  {
+    "name": "org.springframework.security.core.AuthenticationException"
+  },
+  {
+    "name": "java.util.Collections$UnmodifiableList"
+  },
+  {
+    "name": "java.lang.String"
+  },
+  {
+    "name": "java.lang.Number"
+  },
+  {
+    "name": "org.springframework.security.web.authentication.rememberme.RememberMeAuthenticationException"
+  },
+  {
+    "name": "org.springframework.security.authentication.AccountExpiredException"
+  },
+  {
+    "name": "org.springframework.security.web.authentication.session.SessionAuthenticationException"
+  },
+  {
+    "name": "org.springframework.security.web.savedrequest.SavedCookie"
+  },
+  {
+    "name": "org.springframework.security.core.context.SecurityContextImpl"
+  },
+  {
+    "name": "org.springframework.security.authentication.AuthenticationServiceException"
+  },
+  {
+    "name": "java.util.Collections$UnmodifiableSet"
+  },
+  {
+    "name": "java.lang.RuntimeException"
+  },
+  {
+    "name": "java.lang.Exception"
+  },
+  {
+    "name": "org.springframework.security.web.csrf.DefaultCsrfToken"
+  },
+  {
+    "name": "org.springframework.security.web.savedrequest.DefaultSavedRequest"
+  },
+  {
+    "name": "org.springframework.security.authentication.InsufficientAuthenticationException"
+  },
+  {
+    "name": "java.util.Collections$UnmodifiableCollection"
+  },
+  {
+    "name": "java.util.Collections$EmptyList"
+  },
+  {
+    "name": "java.util.TreeMap"
+  },
+  {
+    "name": "java.lang.String$CaseInsensitiveComparator"
+  },
+  {
+    "name": "org.springframework.security.authentication.AbstractAuthenticationToken"
+  },
+  {
+    "name": "org.springframework.security.authentication.UsernamePasswordAuthenticationToken"
+  }
+]

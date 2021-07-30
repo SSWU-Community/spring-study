@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="sungshin.sooon.controller.AccountControllerTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2021-07-30T06:10:29" hostname="imsujeong-ui-MacBook-Pro.local" time="0.47">
+  <properties/>
+  <testcase name="로그인()" classname="sungshin.sooon.controller.AccountControllerTest" time="0.47"/>
+  <system-out><![CDATA[15:10:22.747 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating CacheAwareContextLoaderDelegate from class [org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate]
+15:10:22.765 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating BootstrapContext using constructor [public org.springframework.test.context.support.DefaultBootstrapContext(java.lang.Class,org.springframework.test.context.CacheAwareContextLoaderDelegate)]
+15:10:22.827 [Test worker] DEBUG org.springframework.test.context.BootstrapUtils - Instantiating TestContextBootstrapper for test class [sungshin.sooon.controller.AccountControllerTest] from class [org.springframework.boot.test.context.SpringBootTestContextBootstrapper]
+15:10:22.842 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Neither @ContextConfiguration nor @ContextHierarchy found for test class [sungshin.sooon.controller.AccountControllerTest], using SpringBootContextLoader
+15:10:22.849 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [sungshin.sooon.controller.AccountControllerTest]: class path resource [sungshin/sooon/controller/AccountControllerTest-context.xml] does not exist
+15:10:22.850 [Test worker] DEBUG org.springframework.test.context.support.AbstractContextLoader - Did not detect default resource location for test class [sungshin.sooon.controller.AccountControllerTest]: class path resource [sungshin/sooon/controller/AccountControllerTestContext.groovy] does not exist
+15:10:22.851 [Test worker] INFO org.springframework.test.context.support.AbstractContextLoader - Could not detect default resource locations for test class [sungshin.sooon.controller.AccountControllerTest]: no resource found for suffixes {-context.xml, Context.groovy}.
+15:10:22.852 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils - Could not detect default configuration classes for test class [sungshin.sooon.controller.AccountControllerTest]: AccountControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+15:10:22.949 [Test worker] DEBUG org.springframework.test.context.support.ActiveProfilesUtils - Could not find an 'annotation declaring class' for annotation type [org.springframework.test.context.ActiveProfiles] and class [sungshin.sooon.controller.AccountControllerTest]
+15:10:22.984 [Test worker] DEBUG org.springframework.context.index.CandidateComponentsIndexLoader - Loaded 1] index(es)
+15:10:23.032 [Test worker] DEBUG org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider - Using candidate component class from index: sungshin.sooon.SooonApplication
+15:10:23.034 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Found @SpringBootConfiguration sungshin.sooon.SooonApplication for test class sungshin.sooon.controller.AccountControllerTest
+15:10:23.150 [Test worker] DEBUG org.springframework.boot.test.context.SpringBootTestContextBootstrapper - @TestExecutionListeners is not present for class [sungshin.sooon.controller.AccountControllerTest]: using defaults.
+15:10:23.151 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener, org.springframework.security.test.context.support.ReactorContextTestExecutionListener, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener, org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener, org.springframework.test.context.event.ApplicationEventsTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener, org.springframework.test.context.event.EventPublishingTestExecutionListener]
+15:10:23.181 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper - Using TestExecutionListeners: [org.springframework.test.context.web.ServletTestExecutionListener@1cdac7dd, org.springframework.test.context.support.DirtiesContextBeforeModesTestExecutionListener@48b428c2, org.springframework.test.context.event.ApplicationEventsTestExecutionListener@20b3bbc2, org.springframework.boot.test.mock.mockito.MockitoTestExecutionListener@157b8b42, org.springframework.boot.test.autoconfigure.SpringBootDependencyInjectionTestExecutionListener@5fd5521f, org.springframework.test.context.support.DirtiesContextTestExecutionListener@36ce831f, org.springframework.test.context.transaction.TransactionalTestExecutionListener@b9e43af, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@42f6f805, org.springframework.security.test.context.support.WithSecurityContextTestExecutionListener@37c61fee, org.springframework.test.context.event.EventPublishingTestExecutionListener@7552b472, org.springframework.security.test.context.support.ReactorContextTestExecutionListener@c28024c, org.springframework.boot.test.autoconfigure.restdocs.RestDocsTestExecutionListener@79ebf51c, org.springframework.boot.test.autoconfigure.web.client.MockRestServiceServerResetTestExecutionListener@7ed5aca0, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcPrintOnlyOnFailureTestExecutionListener@1ec4762c, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverTestExecutionListener@52323dda, org.springframework.boot.test.autoconfigure.webservices.client.MockWebServiceServerTestExecutionListener@74576195, org.springframework.boot.test.mock.mockito.ResetMocksTestExecutionListener@27347313]
+15:10:23.184 [Test worker] DEBUG org.springframework.test.context.support.AbstractDirtiesContextTestExecutionListener - Before test class: context [DefaultTestContext@4a7b1a64 testClass = AccountControllerTest, testInstance = [null], testMethod = [null], testException = [null], mergedContextConfiguration = [WebMergedContextConfiguration@8ea4a13 testClass = AccountControllerTest, locations = '{}', classes = '{class sungshin.sooon.SooonApplication}', contextInitializerClasses = '[]', activeProfiles = '{}', propertySourceLocations = '{}', propertySourceProperties = '{org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}', contextCustomizers = set[org.springframework.boot.test.autoconfigure.actuate.metrics.MetricsExportContextCustomizerFactory$DisableMetricExportContextCustomizer@14af3f97, org.springframework.boot.test.autoconfigure.properties.PropertyMappingContextCustomizer@4b3fa0b3, org.springframework.boot.test.autoconfigure.web.servlet.WebDriverContextCustomizerFactory$Customizer@46e272ec, [ImportsContextCustomizer@340b186a key = [org.springframework.boot.test.autoconfigure.web.servlet.MockMvcAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebClientAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcWebDriverAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.client.servlet.OAuth2ClientAutoConfiguration, org.springframework.boot.autoconfigure.security.oauth2.resource.servlet.OAuth2ResourceServerAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.SecurityFilterAutoConfiguration, org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration, org.springframework.boot.test.autoconfigure.web.servlet.MockMvcSecurityConfiguration]], org.springframework.boot.test.context.filter.ExcludeFilterContextCustomizer@6ade001, org.springframework.boot.test.json.DuplicateJsonObjectContextCustomizerFactory$DuplicateJsonObjectContextCustomizer@7dd8e93f, org.springframework.boot.test.mock.mockito.MockitoContextCustomizer@0, org.springframework.boot.test.web.client.TestRestTemplateContextCustomizer@76aa86d3, org.springframework.boot.test.context.SpringBootTestArgs@1, org.springframework.boot.test.context.SpringBootTestWebEnvironment@7f51bc82], resourceBasePath = 'src/main/webapp', contextLoader = 'org.springframework.boot.test.context.SpringBootContextLoader', parent = [null]], attributes = map['org.springframework.test.context.web.ServletTestExecutionListener.activateListener' -> true]], class annotated with @DirtiesContext [false] with mode [null].
+15:10:23.278 [Test worker] DEBUG org.springframework.test.context.support.TestPropertySourceUtils - Adding inlined properties to environment: {spring.jmx.enabled=false, org.springframework.boot.test.context.SpringBootTestContextBootstrapper=true}
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v2.5.1)
+
+2021-07-30 15:10:23.739  INFO 98272 --- [    Test worker] s.s.controller.AccountControllerTest     : Starting AccountControllerTest using Java 14.0.2 on imsujeong-ui-MacBook-Pro.local with PID 98272 (started by iamsujeong in /Users/iamsujeong/Desktop/spring/ss/spring-study)
+2021-07-30 15:10:23.743  INFO 98272 --- [    Test worker] s.s.controller.AccountControllerTest     : No active profile set, falling back to default profiles: default
+2021-07-30 15:10:24.597  INFO 98272 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2021-07-30 15:10:24.665  INFO 98272 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 60 ms. Found 6 JPA repository interfaces.
+2021-07-30 15:10:25.130  INFO 98272 --- [    Test worker] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$c21b6d90] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-07-30 15:10:25.253  INFO 98272 --- [    Test worker] .w.s.a.s.AnnotationActionEndpointMapping : Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-07-30 15:10:25.503  INFO 98272 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2021-07-30 15:10:26.070  INFO 98272 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2021-07-30 15:10:26.219  INFO 98272 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-07-30 15:10:26.313  INFO 98272 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 5.4.32.Final
+2021-07-30 15:10:26.369  INFO 98272 --- [    Test worker] o.hibernate.annotations.common.Version   : HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2021-07-30 15:10:26.555  INFO 98272 --- [    Test worker] org.hibernate.dialect.Dialect            : HHH000400: Using dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+2021-07-30 15:10:27.662  INFO 98272 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-07-30 15:10:27.672  INFO 98272 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-07-30 15:10:28.315  WARN 98272 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-07-30 15:10:28.726  INFO 98272 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/h2-console/**'] with []
+2021-07-30 15:10:28.726  INFO 98272 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure Ant [pattern='/favicon.ico'] with []
+2021-07-30 15:10:28.726  INFO 98272 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure Mvc [pattern='/node_modules/**'] with []
+2021-07-30 15:10:28.726  INFO 98272 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure org.springframework.boot.autoconfigure.security.servlet.StaticResourceRequest$StaticResourceRequestMatcher@77631026 with []
+2021-07-30 15:10:28.818  INFO 98272 --- [    Test worker] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@4c1939aa, org.springframework.security.web.context.SecurityContextPersistenceFilter@4df6f859, org.springframework.security.web.header.HeaderWriterFilter@7e935562, org.springframework.security.web.authentication.logout.LogoutFilter@398589bf, sungshin.sooon.config.JwtFilter@7184f533, sungshin.sooon.config.JwtFilter@40fafc28, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@35c6780, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@6ee2350c, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@44f647f, org.springframework.security.web.session.SessionManagementFilter@3f26dade, org.springframework.security.web.access.ExceptionTranslationFilter@54f73d69, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@22d07c2f]
+2021-07-30 15:10:29.107  WARN 98272 --- [    Test worker] ion$DefaultTemplateResolverConfiguration : Cannot find template location: classpath:/templates/ (please add some templates or check your Thymeleaf configuration)
+2021-07-30 15:10:29.431  INFO 98272 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2021-07-30 15:10:29.431  INFO 98272 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2021-07-30 15:10:29.432  INFO 98272 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2021-07-30 15:10:29.451  INFO 98272 --- [    Test worker] s.a.ScheduledAnnotationBeanPostProcessor : No TaskScheduler/ScheduledExecutorService bean found for scheduled processing
+2021-07-30 15:10:29.459  INFO 98272 --- [    Test worker] s.s.controller.AccountControllerTest     : Started AccountControllerTest in 6.174 seconds (JVM running for 8.063)
+2021-07-30 15:10:29.925  WARN 98272 --- [    Test worker] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.HttpMediaTypeNotSupportedException: Invalid mime type "{"email":"test@sungshin.ac.kr","password":"sujeongmining2021!"};charset=UTF-8": does not contain '/']
+
+MockHttpServletRequest:
+      HTTP Method = POST
+      Request URI = /api/v1/auth/login
+       Parameters = {}
+          Headers = [Content-Type:"{"email":"test@sungshin.ac.kr","password":"sujeongmining2021!"};charset=UTF-8"]
+             Body = null
+    Session Attrs = {}
+
+Handler:
+             Type = sungshin.sooon.controller.AccountController
+           Method = sungshin.sooon.controller.AccountController#login(LoginRequestDto)
+
+Async:
+    Async started = false
+     Async result = null
+
+Resolved Exception:
+             Type = org.springframework.web.HttpMediaTypeNotSupportedException
+
+ModelAndView:
+        View name = null
+             View = null
+            Model = null
+
+FlashMap:
+       Attributes = null
+
+MockHttpServletResponse:
+           Status = 415
+    Error message = null
+          Headers = [X-Content-Type-Options:"nosniff", X-XSS-Protection:"1; mode=block", Cache-Control:"no-cache, no-store, max-age=0, must-revalidate", Pragma:"no-cache", Expires:"0"]
+     Content type = null
+             Body = 
+    Forwarded URL = null
+   Redirected URL = null
+          Cookies = []
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

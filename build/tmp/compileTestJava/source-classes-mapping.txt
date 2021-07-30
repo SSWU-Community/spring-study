@@ -1,0 +1,2 @@
+sungshin/sooon/SooonApplicationTests.java
+ sungshin.sooon.SooonApplicationTests
