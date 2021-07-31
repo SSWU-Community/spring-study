@@ -1,0 +1,13 @@
+= REST API
+:toc: left
+:toclevels: 2
+:source-highlighter: highlightjs
+
+== 1. 개요
+
+== 2. 홈
+=== 2-1. 홈 조회
+==== Request Example
+include::{snippets}/home/http-request.adoc[]
+==== Response Example
+include::{snippets}/home/response-body.adoc[]

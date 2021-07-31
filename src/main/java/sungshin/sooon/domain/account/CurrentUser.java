@@ -1,4 +1,4 @@
-package sungshin.sooon.model;
+package sungshin.sooon.domain.account;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
