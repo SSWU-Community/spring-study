@@ -5,32 +5,32 @@ import sungshin.sooon.model.PostComment;
 
 import java.time.LocalDateTime;
 
-@Getter @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
+@Builder
 public class PostCommentResponseDto {
 
-    private Long post_comment_id;
-
+    private Long id;
     private String comment;
+    private Boolean isAnonymous;
+    private Long orderNum;
+    private LocalDateTime createdAt;
 
+    private Long postId;
+    private Long accountId;
     private String nickname;
-
-    private Boolean is_anonymous;
-
-    private Long order_num;
-
-    private LocalDateTime created_at;
 
     public static PostCommentResponseDto from(PostComment postComment) {
         return PostCommentResponseDto.builder()
-                .post_comment_id(postComment.getId())
-                .nickname(postComment.getAccount().getNickname())
+                .id(postComment.getId())
                 .comment(postComment.getComment())
-                .is_anonymous(postComment.getIs_anonymous())
-                .order_num(postComment.getId())
-                .created_at(postComment.getCreated_at())
+                .isAnonymous(postComment.getIsAnonymous())
+                .orderNum(postComment.getOrderNum())
+                .createdAt(postComment.getCreatedAt())
+                .postId(postComment.getPost().getId())
+                .accountId(postComment.getAccount().getId())
+                .nickname(postComment.getAccount().getNickname())
                 .build();
     }
 }

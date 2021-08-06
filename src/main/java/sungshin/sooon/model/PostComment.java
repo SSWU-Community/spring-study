@@ -48,11 +48,11 @@ public class PostComment {
         }
     }
 
-    private Long order_num;
+    private Long orderNum;
 
     @Column(nullable = false)
-    private Boolean is_anonymous;
+    private Boolean isAnonymous;
 
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
 }

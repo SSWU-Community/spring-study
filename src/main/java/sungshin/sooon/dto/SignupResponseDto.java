@@ -3,10 +3,10 @@ package sungshin.sooon.dto;
 import lombok.*;
 import sungshin.sooon.model.Account;
 
-@Getter @Setter
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Getter @Setter
+@Builder
 public class SignupResponseDto {
 
     private Long id;

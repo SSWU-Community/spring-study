@@ -8,10 +8,10 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
-@Getter @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter @Setter
+@Builder
 public class SignupRequestDto {
 
     @NotBlank(message = "Email should not be blank")

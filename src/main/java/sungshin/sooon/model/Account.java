@@ -31,12 +31,15 @@ public class Account {
 
     private LocalDateTime registeredDateTime;
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
     private List<Post> posts = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
     private List<PostComment> postComments = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account", cascade = CascadeType.REMOVE)
     private List<PostLike> postLikes = new ArrayList<>();
 

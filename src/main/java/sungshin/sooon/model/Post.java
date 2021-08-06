@@ -12,7 +12,6 @@ import static javax.persistence.FetchType.LAZY;
 
 @Entity
 @Getter @Setter
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @DynamicUpdate
@@ -29,12 +28,14 @@ public class Post {
     private String content;
 
     @Column(nullable = false)
-    private Boolean is_anonymous;
+    @Builder.Default
+    private Boolean isAnonymous = true;
 
     @Column
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = LAZY)
+    @Builder.Default
     @JoinColumn(name = "account_id", foreignKey = @ForeignKey(name = "FK_account_post"))
     private Account account;
 
@@ -47,6 +48,7 @@ public class Post {
     }
 
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<PostComment> postComments = new ArrayList<>();
 
     public void addPostComment(PostComment postComment) {
@@ -54,11 +56,11 @@ public class Post {
 
         if(postComment.getPost() != this) {
             postComment.setPost(this);
-            postComment.setAccount(account);
         }
     }
 
     @OneToMany(fetch = LAZY, mappedBy = "post", cascade = CascadeType.REMOVE)
+    @Builder.Default
     private List<PostLike> postLikes = new ArrayList<>();
 
     public void addPostLike(PostLike postLike) {
@@ -66,25 +68,25 @@ public class Post {
 
         if(postLike.getPost() != this) {
             postLike.setPost(this);
-            postLike.setAccount(account);
         }
     }
 
     @OneToMany(mappedBy = "post")
+    @Builder.Default
     private List<PostImages> postImages = new ArrayList<>();
 
-    public void addPostImages(PostImages postImages) {
-        this.postImages.add(postImages);
+    public void addPostImages(PostImages postImage) {
+        this.postImages.add(postImage);
 
-        if(postImages.getPost() != this) {
-            postImages.setPost(this);
+        if(postImage.getPost() != this) {
+            postImage.setPost(this);
         }
     }
 
     public void update(String title, String content, Boolean is_anonymous) {
         this.title = title;
         this.content = content;
-        this.is_anonymous = is_anonymous;
+        this.isAnonymous = is_anonymous;
     }
 
     @Builder.Default

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -16,13 +17,14 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
+@AutoConfigureRestDocs(uriScheme = "https", uriHost = "docs.api.com")
 @AutoConfigureMockMvc
 public class AccountControllerTest {
     @Autowired
-    MockMvc mockMvc;
+    private MockMvc mockMvc;
 
     @Autowired
-    ObjectMapper objectMapper;
+    private ObjectMapper objectMapper;
 
     @Test
     @DisplayName("회원가입 Test")
@@ -30,7 +32,7 @@ public class AccountControllerTest {
     void test_register() throws Exception {
         SignupRequestDto dto = SignupRequestDto.builder()
                 .email("20173073@sungshin.ac.kr")
-                .password("test123!!!")
+                .password("test123!")
                 .nickname("test")
                 .build();
 

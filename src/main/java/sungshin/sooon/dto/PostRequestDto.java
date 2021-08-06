@@ -1,17 +1,17 @@
 package sungshin.sooon.dto;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import sungshin.sooon.model.Post;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
 
-@Data
-@Builder
+
+@AllArgsConstructor
+@NoArgsConstructor
 @RequiredArgsConstructor
+@Getter
+@Builder
 public class PostRequestDto {
 
     @NotBlank(message = "Title should not be blank")
@@ -21,22 +21,17 @@ public class PostRequestDto {
     private String content;
 
     @NotNull
-    private Boolean is_anonymous;
-
-    private LocalDateTime created_at;
-
-    private Long imageId;
+    private Boolean isAnonymous;
 
     public Post toPost() {
         return Post.builder()
                 .title(title)
                 .content(content)
-                .is_anonymous(is_anonymous)
-                .created_at(LocalDateTime.now())
+                .isAnonymous(isAnonymous)
                 .build();
     }
 
     public void apply(Post post) {
-        post.update(title, content, is_anonymous);
+        post.update(title, content, isAnonymous);
     }
 }

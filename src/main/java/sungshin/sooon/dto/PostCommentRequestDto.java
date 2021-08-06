@@ -8,10 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-@Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
+@Builder
 public class PostCommentRequestDto {
 
     @NotBlank(message = "Comment should not be blank")
@@ -19,15 +19,12 @@ public class PostCommentRequestDto {
     private String comment;
 
     @NotNull
-    private Boolean is_anonymous;
-
-    private LocalDateTime created_at;
+    private Boolean isAnonymous;
 
     public PostComment toComment() {
         return PostComment.builder()
                 .comment(comment)
-                .is_anonymous(is_anonymous)
-                .created_at(LocalDateTime.now())
+                .isAnonymous(isAnonymous)
                 .build();
     }
 }

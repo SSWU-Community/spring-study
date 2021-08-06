@@ -8,9 +8,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
-@Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter @Setter
 public class LoginRequestDto {
 
     @NotBlank(message = "Email should not be blank")

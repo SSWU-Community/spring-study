@@ -21,7 +21,7 @@ public class AmazonS3Service {
 
     private final static String TEMP_FILE_PATH = "src/main/resources/static/";
 
-    private final AmazonS3Service amazonS3Service;
+    private final AmazonS3Client amazonS3Client;
 
     @Value("${cloud.aws.s3.originBucket}")
     public String originBucket;
@@ -40,8 +40,8 @@ public class AmazonS3Service {
     }
 
     private String putS3(File uploadFile, String fileName) {
-        amazonS3Service.putObject(new PutObjectRequest(originBucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
-        return amazonS3Service.getUrl(originBucket, fileName).toString();
+        amazonS3Client.putObject(new PutObjectRequest(originBucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
+        return amazonS3Client.getUrl(originBucket, fileName).toString();
     }
 
     private void removeNewFile(File targetFile) {
